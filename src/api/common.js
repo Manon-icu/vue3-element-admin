@@ -25,3 +25,11 @@ export const uploadFile = data => {
     data,
   })
 }
+
+// 获取登录用户信息
+export const GetUserinfo = () => {
+  return request({
+    url: '/api/userinfo',
+    method: 'get',
+  })
+}
