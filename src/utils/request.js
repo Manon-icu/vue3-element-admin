@@ -35,9 +35,9 @@ import router from '@/router'
 import { useApp } from '@/pinia/modules/app'
 
 const service = axios.create({
-  baseURL: 'http://api.montessori-hz.com',
+  // baseURL: 'http://api.montessori-hz.com',
   timeout: 10000,
-  withCredentials: true,
+  // withCredentials: true,
 })
 
 // 拦截请求

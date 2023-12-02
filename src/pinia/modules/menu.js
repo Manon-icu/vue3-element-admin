@@ -10,7 +10,7 @@
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
 import { defineStore } from 'pinia'
-import { fixedRoutes, asyncRoutes } from '@/router'
+import { fixedRoutes } from '@/router'
 import { GetMenus } from '@/api/menu'
 import router from '@/router'
 import { ref } from 'vue'
@@ -85,16 +85,16 @@ export const useMenus = defineStore('menu', () => {
     const { code, data } = await GetMenus()
 
     if (+code === 200) {
-      // 添加路由之前先删除所有动态路由
-      asyncRoutes.forEach(item => {
-        router.removeRoute(item.name)
-      })
-      // 过滤出需要添加的动态路由
-      const filterRoutes = getFilterRoutes(asyncRoutes, data)
-      filterRoutes.forEach(route => router.addRoute(route))
+      // // 添加路由之前先删除所有动态路由
+      // asyncRoutes.forEach(item => {
+      //   router.removeRoute(item.name)
+      // })
+      // // 过滤出需要添加的动态路由
+      // const filterRoutes = getFilterRoutes(asyncRoutes, data)
+      // filterRoutes.forEach(route => router.addRoute(route))
 
       // 生成菜单
-      const menus = getFilterMenus([...fixedRoutes, ...filterRoutes])
+      const menus = getFilterMenus([...fixedRoutes])
       setMenus(menus)
     }
   }

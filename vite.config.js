@@ -50,9 +50,9 @@ export default env => {
       open: true,
       proxy: {
         '/admin': {
-          target: 'http://api-', // 后端接口的域名
+          target: 'http://api.montessori-hz.com/admin', // 后端接口的域名
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/api/, ''),
+          rewrite: path => path.replace(/^\/admin/, ''),
         },
       },
     },

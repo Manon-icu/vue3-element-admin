@@ -1,11 +1,11 @@
 <template>
   <div class="login">
     <el-form class="form" :model="model" :rules="rules" ref="loginForm">
-      <h1 class="title">Vue3 Element Admin</h1>
+      <h1 class="title">Login</h1>
       <el-form-item prop="userName">
         <el-input
           class="text"
-          v-model="model.userName"
+          v-model="model.account"
           prefix-icon="User"
           clearable
           :placeholder="$t('login.username')"
@@ -14,7 +14,7 @@
       <el-form-item prop="password">
         <el-input
           class="text"
-          v-model="model.password"
+          v-model="model.pass_word"
           prefix-icon="Lock"
           show-password
           clearable
@@ -67,14 +67,14 @@ export default defineComponent({
       state.rules = getRules()
     })
     const getRules = () => ({
-      userName: [
+      account: [
         {
           required: true,
           message: ctx.$t('login.rules-username'),
           trigger: 'blur',
         },
       ],
-      password: [
+      pass_word: [
         {
           required: true,
           message: ctx.$t('login.rules-password'),
@@ -90,8 +90,8 @@ export default defineComponent({
     })
     const state = reactive({
       model: {
-        userName: 'admin',
-        password: 'ami@888888',
+        account: 'admin',
+        pass_word: 'ami@888888',
       },
       rules: getRules(),
       loading: false,
@@ -107,7 +107,7 @@ export default defineComponent({
           if (valid) {
             state.loading = true
             const { code, data, message } = await Login(state.model)
-            if (+code === 200) {
+            if (code === 0) {
               ctx.$message.success({
                 message: ctx.$t('login.loginsuccess'),
                 duration: 1000,
