@@ -10,7 +10,7 @@
  * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
  */
 import { defineStore } from 'pinia'
-import { GetUserinfo } from '@/api/login'
+import { GetUserinfo } from '@/api/common'
 
 export const useAccount = defineStore('account', {
   state: () => ({
