@@ -49,7 +49,7 @@ import {
   computed,
   watch,
 } from 'vue'
-import { Login } from '@/api/login'
+import { Login } from '@/api/common'
 import { useRouter, useRoute } from 'vue-router'
 import ChangeLang from '@/layout/components/Topbar/ChangeLang.vue'
 import useLang from '@/i18n/useLang'
@@ -91,7 +91,7 @@ export default defineComponent({
     const state = reactive({
       model: {
         userName: 'admin',
-        password: '123456',
+        password: 'ami@888888',
       },
       rules: getRules(),
       loading: false,

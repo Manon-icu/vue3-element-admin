@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { viteMockServe } from 'vite-plugin-mock'
-import {createSvgIconsPlugin} from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 // https://vitejs.dev/config/
 export default env => {
@@ -28,7 +28,7 @@ export default env => {
         iconDirs: [path.resolve(__dirname, 'src/assets/svg')],
         // 指定symbolId格式
         symbolId: 'icon-[dir]-[name]',
-      })
+      }),
     ],
     css: {
       preprocessorOptions: {
@@ -49,8 +49,8 @@ export default env => {
       port: 3001,
       open: true,
       proxy: {
-        '/api': {
-          target: 'http://dev.api.xxx.com', // 后端接口的域名
+        '/admin': {
+          target: 'http://api-', // 后端接口的域名
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },
