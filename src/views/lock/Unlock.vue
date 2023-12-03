@@ -92,7 +92,7 @@ export default defineComponent({
 
     const lockRules = reactive({
       password: [
-        { required: true, message: 'Screen password or User password',
+        { required: true, message: 'Screen password or User password' },
         {
           validator: checkPwd,
           message: 'Password error',

@@ -21,6 +21,9 @@
   ],
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "@tinymce/tinymce-vue": "^5.1.1",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.6.0",
     "pinia": "^2.1.7",
     "vue": "3.3.7",
