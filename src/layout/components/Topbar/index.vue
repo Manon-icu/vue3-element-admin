@@ -1,11 +1,6 @@
 <template>
   <div class="header" :class="{ 'no-border': isHorizontalMenu }">
     <div class="navigation">
-      <logo
-        v-if="isShowLogo"
-        class="mobile"
-        :class="{ 'show-title': isHorizontalMenu }"
-      />
       <hamburger v-if="isShowHamburger" />
       <breadcrumbs v-if="isShowBreadcrumbs" />
     </div>
@@ -17,7 +12,6 @@
 </template>
 <script>
 import { defineComponent, computed } from 'vue'
-import Logo from '@/layout/components/Sidebar/Logo.vue'
 import Hamburger from './Hamburger.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import Userinfo from './Userinfo.vue'
@@ -28,7 +22,6 @@ import { useApp } from '@/pinia/modules/app'
 
 export default defineComponent({
   components: {
-    Logo,
     Hamburger,
     Breadcrumbs,
     Userinfo,

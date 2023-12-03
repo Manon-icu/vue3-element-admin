@@ -3,7 +3,6 @@
     class="left"
     :class="{ collapse: collapse, mobile: device === 'mobile' }"
   >
-    <logo />
     <menus :collapse="collapse" />
   </div>
   <div class="mask" @click="closeSidebar"></div>
@@ -13,12 +12,10 @@
 import { useApp } from '@/pinia/modules/app'
 import { storeToRefs } from 'pinia'
 import { computed, defineComponent } from 'vue'
-import Logo from './Logo.vue'
 import Menus from './Menus.vue'
 
 export default defineComponent({
   components: {
-    Logo,
     Menus,
   },
   setup() {
