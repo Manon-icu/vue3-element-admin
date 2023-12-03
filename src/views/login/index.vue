@@ -8,7 +8,7 @@
           v-model="model.account"
           prefix-icon="User"
           clearable
-          :placeholder="$t('login.username')"
+          placeholder="Username"
         />
       </el-form-item>
       <el-form-item prop="password">
@@ -18,7 +18,7 @@
           prefix-icon="Lock"
           show-password
           clearable
-          :placeholder="$t('login.password')"
+          placeholder="Password"
         />
       </el-form-item>
       <el-form-item>
@@ -34,9 +34,6 @@
       </el-form-item>
     </el-form>
   </div>
-  <div class="change-lang">
-    <change-lang />
-  </div>
 </template>
 
 <script>
@@ -47,43 +44,35 @@ import {
   toRefs,
   ref,
   computed,
-  watch,
 } from 'vue'
 import { Login } from '@/api/common'
 import { useRouter, useRoute } from 'vue-router'
-import ChangeLang from '@/layout/components/Topbar/ChangeLang.vue'
-import useLang from '@/i18n/useLang'
 import { useApp } from '@/pinia/modules/app'
 
 export default defineComponent({
-  components: { ChangeLang },
   name: 'login',
   setup() {
     const { proxy: ctx } = getCurrentInstance() // 可以把ctx当成vue2中的this
     const router = useRouter()
     const route = useRoute()
-    const { lang } = useLang()
-    watch(lang, () => {
-      state.rules = getRules()
-    })
     const getRules = () => ({
       account: [
         {
           required: true,
-          message: ctx.$t('login.rules-username'),
+          message: 'Please input username',
           trigger: 'blur',
         },
       ],
       pass_word: [
         {
           required: true,
-          message: ctx.$t('login.rules-password'),
+          message: 'Please input password',
           trigger: 'blur',
         },
         {
           min: 6,
           max: 12,
-          message: ctx.$t('login.rules-regpassword'),
+          message: '6 to 12 characters in length',
           trigger: 'blur',
         },
       ],
@@ -95,9 +84,7 @@ export default defineComponent({
       },
       rules: getRules(),
       loading: false,
-      btnText: computed(() =>
-        state.loading ? ctx.$t('login.logining') : ctx.$t('login.login')
-      ),
+      btnText: computed(() => (state.loading ? 'Login...' : 'Login')),
       loginForm: ref(null),
       submit: () => {
         if (state.loading) {
@@ -109,7 +96,7 @@ export default defineComponent({
             const { code, data, message } = await Login(state.model)
             if (code === 0) {
               ctx.$message.success({
-                message: ctx.$t('login.loginsuccess'),
+                message: 'Success',
                 duration: 1000,
               })
 

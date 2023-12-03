@@ -58,13 +58,7 @@ export default env => {
     },
     esbuild: false,
     build: {
-      terserOptions: {
-        compress: {
-          keep_infinity: true,
-          // 删除console
-          drop_console: true,
-        },
-      },
+      minify: 'terser', // 'esbuild
       // 禁用该功能可能会提高大型项目的构建性能
       brotliSize: false,
       rollupOptions: {

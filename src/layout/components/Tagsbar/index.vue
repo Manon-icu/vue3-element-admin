@@ -1,25 +1,3 @@
-<!--
- *           佛曰:  
- *                   写字楼里写字间，写字间里程序员；  
- *                   程序人员写程序，又拿程序换酒钱。  
- *                   酒醒只在网上坐，酒醉还来网下眠；  
- *                   酒醉酒醒日复日，网上网下年复年。  
- *                   但愿老死电脑间，不愿鞠躬老板前；  
- *                   奔驰宝马贵者趣，公交自行程序员。  
- *                   别人笑我忒疯癫，我笑自己命太贱；  
- *                   不见满街漂亮妹，哪个归得程序员？
- * 
- * @Descripttion: 
- * @version: 
- * @Date: 2021-04-20 11:06:21
- * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2022-09-24 20:38:36
- * @Author: huzhushan@126.com
- * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
- * @Github: https://github.com/huzhushan/vue3-element-admin
- * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
- -->
-
 <template>
   <div class="tags-container" :class="{ hide: !isTagsbarShow }">
     <el-scrollbar
@@ -43,7 +21,7 @@
           @click.middle="closeTag(tag)"
           @contextmenu.prevent="openMenu(tag, $event)"
         >
-          <span class="title">{{ $t(tag.title) }}</span>
+          <span class="title">{{ tag.title }}</span>
 
           <el-icon
             v-if="!isAffix(tag)"
@@ -61,14 +39,12 @@
     :style="{ left: left + 'px', top: top + 'px' }"
     class="contextmenu"
   >
-    <li @click="refreshSelectedTag(selectedTag)">{{ $t('tags.refresh') }}</li>
-    <li v-if="!isAffix(selectedTag)" @click="closeTag(selectedTag)">
-      {{ $t('tags.close') }}
-    </li>
-    <li @click="closeOtherTags">{{ $t('tags.other') }}</li>
-    <li @click="closeLeftTags">{{ $t('tags.left') }}</li>
-    <li @click="closeRightTags">{{ $t('tags.right') }}</li>
-    <li @click="closeAllTags">{{ $t('tags.all') }}</li>
+    <li @click="refreshSelectedTag(selectedTag)">ReFresh</li>
+    <li v-if="!isAffix(selectedTag)" @click="closeTag(selectedTag)">Close</li>
+    <li @click="closeOtherTags">Close Other</li>
+    <li @click="closeLeftTags">Close Left</li>
+    <li @click="closeRightTags">Close Right</li>
+    <li @click="closeAllTags">Close All</li>
   </ul>
 </template>
 

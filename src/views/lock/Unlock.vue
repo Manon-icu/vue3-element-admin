@@ -1,9 +1,9 @@
 <template>
   <h1 class="title">
-    ⚡ {{ $t('topbar.lock-locked') }}
+    ⚡ Screen Locked
     <div class="unlock-btn" @click="handleUnlock">
       <i class="el-icon-unlock"></i>
-      {{ $t('topbar.lock-lock') }}
+      Unlock
     </div>
   </h1>
   <div class="unlock-modal" v-show="showModal">
@@ -14,7 +14,6 @@
           type="password"
           v-model.trim="lockModel.password"
           autocomplete="off"
-          :placeholder="$t('topbar.lock-rules-password2')"
           @keyup.enter="submitForm"
           style="width: 320px"
         >
@@ -30,12 +29,8 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="cancel" type="text">
-          {{ $t('public.cancel') }}
-        </el-button>
-        <el-button @click="reLogin" type="text">
-          {{ $t('topbar.lock-relogin') }}
-        </el-button>
+        <el-button @click="cancel" type="text">Cancel</el-button>
+        <el-button @click="reLogin" type="text">Re login</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -97,10 +92,10 @@ export default defineComponent({
 
     const lockRules = reactive({
       password: [
-        { required: true, message: ctx.$t('topbar.lock-rules-password2') },
+        { required: true, message: 'Screen password or User password',
         {
           validator: checkPwd,
-          message: ctx.$t('topbar.lock-rules-password3'),
+          message: 'Password error',
           trigger: 'none',
         },
       ],
@@ -115,7 +110,7 @@ export default defineComponent({
           getUserinfo()
         }
       } else {
-        ctx.$message(ctx.$t('topbar.lock-error'))
+        ctx.$message('Your account has been logged out, please log in directly')
         reLogin()
       }
     }

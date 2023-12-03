@@ -3,7 +3,7 @@
     <div class="time">{{ currentTime }}</div>
     <div class="date">
       {{ currentDate }}
-      <span style="margin-left: 16px">{{ $t(week) }}</span>
+      <span style="margin-left: 16px">{{ week }}</span>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default defineComponent({
     return {
       currentTime,
       currentDate: parseTime(new Date(), '{y}-{m}-{d}'),
-      week: `topbar.lock-week${new Date().getDay()}`,
+      week: new Date().getDay(),
     }
   },
 })

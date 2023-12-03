@@ -8,7 +8,6 @@ import ElementPlus from 'element-plus'
 import './assets/style/element-variables.scss'
 
 // 国际化
-import i18n from '@/i18n'
 
 // 全局注册element-plus/icons-vue
 import * as ICONS from '@element-plus/icons-vue'
@@ -43,9 +42,4 @@ Object.values(Directives).forEach(fn => fn(app))
 import useErrorHandler from './error-log'
 useErrorHandler(app)
 
-app
-  .use(i18n)
-  .use(ElementPlus)
-  .use(pinia)
-  .use(router)
-  .mount('#app')
+app.use(ElementPlus).use(pinia).use(router).mount('#app')

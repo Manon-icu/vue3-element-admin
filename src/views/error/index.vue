@@ -14,19 +14,19 @@
     <template v-if="error === '403'">
       <span class="code-403">403</span>
       <svg-icon name="error-icons-403" class="error-img" />
-      <h2 class="title">{{ $t('error.noauth') }}</h2>
+      <h2 class="title">No Access</h2>
     </template>
     <template v-else-if="error === '500'">
       <svg-icon name="error-icons-500" class="error-img" />
-      <h2 class="title">{{ $t('error.servererror') }}</h2>
+      <h2 class="title">Server error</h2>
     </template>
     <template v-else-if="error === '404'">
       <svg-icon name="error-icons-404" class="error-img" />
-      <h2 class="title">{{ $t('error.notfound') }}</h2>
+      <h2 class="title">Page Not Found</h2>
     </template>
 
     <router-link to="/">
-      <el-button type="primary">{{ $t('error.backhome') }}</el-button>
+      <el-button type="primary">Back to Home</el-button>
     </router-link>
   </div>
 </template>

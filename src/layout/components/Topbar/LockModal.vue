@@ -1,62 +1,7 @@
-<!--
- *                                |~~~~~~~|
- *                                |       |
- *                                |       |
- *                                |       |
- *                                |       |
- *                                |       |
- *     |~.\\\_\~~~~~~~~~~~~~~xx~~~         ~~~~~~~~~~~~~~~~~~~~~/_//;~|
- *     |  \  o \_         ,XXXXX),                         _..-~ o /  |
- *     |    ~~\  ~-.     XXXXX`)))),                 _.--~~   .-~~~   |
- *      ~~~~~~~`\   ~\~~~XXX' _/ ';))     |~~~~~~..-~     _.-~ ~~~~~~~
- *               `\   ~~--`_\~\, ;;;\)__.---.~~~      _.-~
- *                 ~-.       `:;;/;; \          _..-~~
- *                    ~-._      `''        /-~-~
- *                        `\              /  /
- *                          |         ,   | |
- *                           |  '        /  |
- *                            \/;          |
- *                             ;;          |
- *                             `;   .       |
- *                             |~~~-----.....|
- *                            | \             \
- *                           | /\~~--...__    |
- *                           (|  `\       __-\|
- *                           ||    \_   /~    |
- *                           |)     \~-'      |
- *                            |      | \      '
- *                            |      |  \    :
- *                             \     |  |    |
- *                              |    )  (    )
- *                               \  /;  /\  |
- *                               |    |/   |
- *                               |    |   |
- *                                \  .'  ||
- *                                |  |  | |
- *                                (  | |  |
- *                                |   \ \ |
- *                                || o `.)|
- *                                |`\\) |
- *                                |       |
- *                                |       |
- * 
- * @Descripttion: 
- * @version: 
- * @Date: 2021-04-23 14:15:50
- * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2022-09-27 17:55:16
- * @Author: huzhushan@126.com
- * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
- * @Github: https://github.com/huzhushan/vue3-element-admin
- * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
- -->
-
 <template>
-  <el-dropdown-item @click="dialogVisible = true">
-    {{ $t('topbar.lock-title') }}
-  </el-dropdown-item>
+  <el-dropdown-item @click="dialogVisible = true">Lock Screen</el-dropdown-item>
   <el-dialog
-    :title="$t('topbar.lock-title')"
+    title="Lock Screen"
     v-model="dialogVisible"
     width="640px"
     custom-class="lock-modal"
@@ -69,7 +14,7 @@
       ref="lockForm"
       label-width="90px"
     >
-      <el-form-item :label="$t('topbar.lock-password')" prop="password">
+      <el-form-item label="Please input screen password" prop="password">
         <el-input
           type="password"
           v-model.trim="lockModel.password"
@@ -79,7 +24,7 @@
       </el-form-item>
       <el-form-item>
         <el-button class="submit-btn" type="primary" @click="submitForm">
-          {{ $t('topbar.lock-title') }}
+          Lock Screen
         </el-button>
       </el-form-item>
     </el-form>
@@ -105,9 +50,7 @@ export default defineComponent({
       password: '',
     })
     const lockRules = reactive({
-      password: [
-        { required: true, message: proxy.$t('topbar.lock-rules-password') },
-      ],
+      password: [{ required: true, message: 'Please input screen password' }],
     })
     const submitForm = () => {
       lockForm.value.validate(valid => {

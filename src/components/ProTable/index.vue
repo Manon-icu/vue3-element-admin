@@ -1,34 +1,3 @@
-<!--
- *                        .::::.
- *                      .::::::::.
- *                     :::::::::::
- *                  ..:::::::::::'
- *               '::::::::::::'
- *                 .::::::::::
- *            '::::::::::::::..
- *                 ..::::::::::::.
- *               ``::::::::::::::::
- *                ::::``:::::::::'        .:::.
- *               ::::'   ':::::'       .::::::::.
- *             .::::'      ::::     .:::::::'::::.
- *            .:::'       :::::  .:::::::::' ':::::.
- *           .::'        :::::.:::::::::'      ':::::.
- *          .::'         ::::::::::::::'         ``::::.
- *      ...:::           ::::::::::::'              ``::.
- *     ````':.          ':::::::::'                  ::::..
- *                        '.:::::'                    ':'````..
- * 
- * @Descripttion: 
- * @version: 
- * @Date: 2021-04-20 11:06:21
- * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2022-09-25 11:53:47
- * @Author: huzhushan@126.com
- * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
- * @Github: https://github.com/huzhushan/vue3-element-admin
- * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
- -->
-
 <template>
   <div class="page-box">
     <!-- 搜索选项 -->
@@ -45,7 +14,7 @@
       <el-form-item
         v-for="item in search.fields"
         :key="item.name"
-        :label="$t(item.label)"
+        :label="item.label"
         :prop="item.name"
       >
         <slot v-if="item.type === 'custom'" :name="item.slot" />
@@ -55,13 +24,13 @@
           :filterable="!!item.filterable"
           :multiple="!!item.multiple"
           clearable
-          :placeholder="$t(item.label)"
+          :placeholder="item.label"
           :style="{ width: search.inputWidth, ...item.style }"
         >
           <el-option
             v-for="option of item.options"
             :key="option.value"
-            :label="$t(option.name)"
+            :label="option.name"
             :value="option.value"
           ></el-option>
         </el-select>
@@ -75,7 +44,7 @@
             :key="option.value"
             :label="option.value"
           >
-            {{ $t(option.name) }}
+            {{ option.name }}
           </el-radio>
         </el-radio-group>
         <el-radio-group
@@ -88,7 +57,7 @@
             :key="option.value"
             :label="option.value"
           >
-            {{ $t(option.name) }}
+            {{ option.name }}
           </el-radio-button>
         </el-radio-group>
         <el-checkbox-group
@@ -101,7 +70,7 @@
             :key="option.value"
             :label="option.value"
           >
-            {{ $t(option.name) }}
+            {{ option.name }}
           </el-checkbox>
         </el-checkbox-group>
         <el-checkbox-group
@@ -114,7 +83,7 @@
             :key="option.value"
             :label="option.value"
           >
-            {{ $t(option.name) }}
+            {{ option.name }}
           </el-checkbox-button>
         </el-checkbox-group>
         <el-date-picker
@@ -124,7 +93,7 @@
           format="YYYY-MM-DD"
           clearable
           @change="handleDateChange($event, item, 'YYYY-MM-DD')"
-          :placeholder="$t(item.label)"
+          :placeholder="item.label"
           :style="{ width: search.inputWidth, ...item.style }"
         ></el-date-picker>
         <el-date-picker
@@ -134,7 +103,7 @@
           clearable
           @change="handleDateChange($event, item, 'YYYY-MM-DD HH:mm:ss')"
           format="YYYY-MM-DD HH:mm:ss"
-          :placeholder="$t(item.label)"
+          :placeholder="item.label"
           :style="{ width: search.inputWidth, ...item.style }"
         ></el-date-picker>
         <el-date-picker
@@ -143,8 +112,8 @@
           type="daterange"
           format="YYYY-MM-DD"
           range-separator="-"
-          :start-placeholder="$t('public.startdate')"
-          :end-placeholder="$t('public.enddate')"
+          start-placeholder="From"
+          end-placeholder="To"
           clearable
           @change="handleRangeChange($event, item, 'YYYY-MM-DD')"
           :style="{ ...item.style }"
@@ -155,8 +124,8 @@
           type="datetimerange"
           format="YYYY-MM-DD HH:mm:ss"
           range-separator="-"
-          :start-placeholder="$t('public.starttime')"
-          :end-placeholder="$t('public.endtime')"
+          start-placeholder="From"
+          end-placeholder="To"
           clearable
           @change="handleRangeChange($event, item, 'YYYY-MM-DD HH:mm:ss')"
           :style="{ ...item.style }"
@@ -164,7 +133,7 @@
         <el-input-number
           v-else-if="item.type === 'number'"
           v-model="searchModel[item.name]"
-          :placeholder="$t(item.label)"
+          :placeholder="item.label"
           controls-position="right"
           :min="item.min"
           :max="item.max"
@@ -176,7 +145,7 @@
           type="textarea"
           clearable
           v-model="searchModel[item.name]"
-          :placeholder="$t(item.label)"
+          :placeholder="item.label"
           :style="{ width: search.inputWidth, ...item.style }"
         ></el-input>
         <el-input
@@ -184,17 +153,15 @@
           :maxlength="item.maxlength"
           v-model="searchModel[item.name]"
           clearable
-          :placeholder="$t(item.label)"
+          :placeholder="item.label"
           :style="{ width: search.inputWidth, ...item.style }"
         ></el-input>
       </el-form-item>
       <el-form-item class="search-btn">
         <el-button type="primary" icon="Search" @click="handleSearch">
-          {{ $t('public.search') }}
+          Search
         </el-button>
-        <el-button @click="handleReset" icon="RefreshRight">
-          {{ $t('public.reset') }}
-        </el-button>
+        <el-button @click="handleReset" icon="RefreshRight">Rest</el-button>
       </el-form-item>
     </el-form>
 
@@ -224,7 +191,7 @@
           :filter-method="item.filters && filterHandler"
           :show-overflow-tooltip="!item.wrap"
           v-bind="item"
-          :label="item.label ? $t(item.label) : ''"
+          :label="item.labe"
         >
           <template #header="scope" v-if="!!item.labelSlot">
             <slot :name="item.labelSlot" v-bind="scope"></slot>
