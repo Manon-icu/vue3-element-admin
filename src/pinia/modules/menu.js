@@ -65,7 +65,7 @@ export const useMenus = defineStore('menu', () => {
   }
   const generateMenus = async () => {
     const menus = getFilterMenus(fixedRoutes)
-    commit('SET_MENUS', menus)
+    setMenus(menus)
   }
   return {
     menus,

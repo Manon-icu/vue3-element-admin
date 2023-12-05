@@ -58,7 +58,9 @@ router.beforeEach(async to => {
     if (menus.length <= 0) {
       try {
         await generateMenus()
-        return to.fullPath // 添加动态路由后，必须加这一句触发重定向，否则会404
+
+        return true
+        // return to.fullPath // 添加动态路由后，必须加这一句触发重定向，否则会404
       } catch (err) {
         loadingInstance.close()
         return false
