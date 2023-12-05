@@ -1,10 +1,10 @@
 const Layout = () => import('@/layout/index.vue')
 const Home = () => import('@/views/home/index.vue')
-const Banner = () => import('@/views/Banner/index.vue')
-const Album = () => import('@/views/Album/index.vue')
-const About = () => import('@/views/About/index.vue')
-const Training = () => import('@/views/Training/index.vue')
-const News = () => import('@/views/News/index.vue')
+const Banner = () => import('@/views/banner/index.vue')
+const Album = () => import('@/views/album/index.vue')
+const About = () => import('@/views/about/index.vue')
+const Training = () => import('@/views/training/index.vue')
+const News = () => import('@/views/news/index.vue')
 
 export default [
   {
