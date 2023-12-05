@@ -12,43 +12,28 @@
     </div>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item>User Center</el-dropdown-item>
-        <el-dropdown-item>Modify Password</el-dropdown-item>
-        <lock-modal />
         <el-dropdown-item @click="logout">Log out</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
 </template>
-<script>
-import { defineComponent } from 'vue'
+<script setup>
 import { useRouter } from 'vue-router'
 import { useUserinfo } from '@/components/Avatar/hooks/useUserinfo'
-import LockModal from './LockModal.vue'
 import { useApp } from '@/pinia/modules/app'
+import {Logout} from '@/api/common'
 
-export default defineComponent({
-  components: {
-    LockModal,
-  },
-  setup() {
     const router = useRouter()
 
     const { userinfo } = useUserinfo()
 
     // 退出
-    const logout = () => {
+const logout = async () => {
+      await Logout()
       // 清除token
       useApp().clearToken()
       router.push('/login')
     }
-
-    return {
-      userinfo,
-      logout,
-    }
-  },
-})
 </script>
 
 <style lang="scss" scoped>
