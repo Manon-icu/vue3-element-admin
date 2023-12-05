@@ -4,7 +4,7 @@ import router from '@/router'
 import { useApp } from '@/pinia/modules/app'
 
 const service = axios.create({
-  // baseURL: 'http://api.montessori-hz.com',
+  baseURL: process.env.NODE_ENV === 'production'?'http://api.montessori-hz.com':'',
   timeout: 10000,
   // withCredentials: true,
 })
