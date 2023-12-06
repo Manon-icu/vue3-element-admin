@@ -1,6 +1,5 @@
 <template>
   <div class="lock-wrap">
-    <Unlock />
     <Clock />
     <current-time />
   </div>
@@ -8,7 +7,6 @@
 
 <script>
 import { defineComponent } from 'vue'
-import Unlock from './Unlock.vue'
 import Clock from './Clock.vue'
 import CurrentTime from './CurrentTime.vue'
 

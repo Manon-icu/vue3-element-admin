@@ -59,33 +59,5 @@ export const useApp = defineStore('app', {
       // 清空menus
       useMenus().setMenus([])
     },
-    setScreenCode(password) {
-      const authorization = toRaw(this.authorization)
-
-      if (!password) {
-        try {
-          delete authorization.screenCode
-        } catch (err) {
-          console.log(err)
-        }
-
-        this.authorization = authorization
-        // 保存到localStorage
-        setItem(TOKEN, authorization)
-
-        return
-      }
-
-      // 对密码加密
-      const screenCode = new AesEncryption().encryptByAES(password)
-
-      const res = {
-        ...authorization,
-        screenCode,
-      }
-      this.authorization = res
-      // 保存到localStorage
-      setItem(TOKEN, res)
-    },
   },
 })

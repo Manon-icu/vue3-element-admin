@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
 // 添加 banner
-export const addBanner = data => {
+export const addBanner = params => {
   return request({
     url: '/admin/banner-configs',
-    data,
+    params,
   })
 }
 
@@ -36,7 +36,7 @@ export const getBannerList = params => {
 export const enableBanner = id => {
   return request({
     url: `/admin/banner-configs/${id}/enable`,
-    method: 'put',
+    method: 'post',
   })
 }
 
