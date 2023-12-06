@@ -4,7 +4,8 @@ import router from '@/router'
 import { useApp } from '@/pinia/modules/app'
 
 const service = axios.create({
-  baseURL: process.env.NODE_ENV === 'production'?'http://api.montessori-hz.com':'',
+  baseURL: 'http://api.montessori-hz.com',
+  // process.env.NODE_ENV === 'production' ? 'http://api.montessori-hz.com' : '',
   timeout: 10000,
   // withCredentials: true,
 })
@@ -14,12 +15,11 @@ service.interceptors.request.use(
   config => {
     const { authorization } = useApp()
     if (authorization) {
-      config.headers.Authorization = `Bearer ${authorization.token}`
+      config.headers.auth_key = `WWW-Authorization Bearer ${authorization.auth_key}`
     }
     return config
   },
   error => {
-    // console.log(error);
     return Promise.reject(error)
   }
 )

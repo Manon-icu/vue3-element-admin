@@ -3,7 +3,6 @@ import router from '@/router'
 import { TOKEN } from './pinia/modules/app' // TOKEN变量名
 import { nextTick } from 'vue'
 import { useApp } from './pinia/modules/app'
-import { useAccount } from './pinia/modules/account'
 import { useMenus } from './pinia/modules/menu'
 
 const getPageTitle = title => {
@@ -39,20 +38,6 @@ router.beforeEach(async to => {
       replace: true,
     }
   } else {
-    const { userinfo, getUserinfo } = useAccount()
-    // 获取用户角色信息，根据角色判断权限
-    if (!userinfo) {
-      try {
-        // 获取用户信息
-        await getUserinfo()
-      } catch (err) {
-        loadingInstance.close()
-        return false
-      }
-
-      return to.fullPath
-    }
-
     // 生成菜单（如果你的项目有动态菜单，在此处会添加动态路由）
     const { menus, generateMenus } = useMenus()
     if (menus.length <= 0) {

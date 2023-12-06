@@ -1,13 +1,3 @@
-import { useAccount } from '@/pinia/modules/account'
-
-const checkUserinfo = (code, fullPath) => {
-  const { userinfo } = useAccount()
-  if (userinfo) {
-    return `/error/${code === '404' ? fullPath : code}`
-  }
-  return true
-}
-
 const Layout = () => import('@/layout/index.vue')
 const Error = () => import('@/views/error/index.vue')
 
@@ -52,9 +42,6 @@ export default [
     props: {
       error: '403',
     },
-    beforeEnter() {
-      return checkUserinfo('403')
-    },
   },
   {
     path: '/500',
@@ -63,9 +50,6 @@ export default [
     props: {
       error: '500',
     },
-    beforeEnter() {
-      return checkUserinfo('500')
-    },
   },
   {
     path: '/:pathMatch(.*)',
@@ -73,9 +57,6 @@ export default [
     component: Error,
     props: {
       error: '404',
-    },
-    beforeEnter(to) {
-      return checkUserinfo('404', to.fullPath.replace('/', ''))
     },
   },
 ]

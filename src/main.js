@@ -34,10 +34,6 @@ Object.entries(Components).forEach(([key, component]) => {
   app.component(key, component)
 })
 
-// 注册自定义指令
-import * as Directives from '@/directive'
-Object.values(Directives).forEach(fn => fn(app))
-
 // 错误日志
 import useErrorHandler from './error-log'
 useErrorHandler(app)

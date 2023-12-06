@@ -14,7 +14,6 @@ import { defineStore } from 'pinia'
 import { getItem, setItem, removeItem } from '@/utils/storage' //getItem和setItem是封装的操作localStorage的方法
 import { AesEncryption } from '@/utils/encrypt'
 import { toRaw } from 'vue'
-import { useAccount } from './account'
 import { useTags } from './tags'
 import { useMenus } from './menu'
 export const TOKEN = 'VEA-TOKEN'
@@ -55,8 +54,6 @@ export const useApp = defineStore('app', {
       // 清除token
       this.authorization = ''
       removeItem(TOKEN)
-      // 清除用户信息
-      useAccount().clearUserinfo()
       // 清除标签栏
       useTags().clearAllTags()
       // 清空menus

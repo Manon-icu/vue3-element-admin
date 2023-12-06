@@ -1,14 +1,8 @@
 <template>
   <el-dropdown trigger="hover">
     <div class="userinfo">
-      <template v-if="!userinfo">
-        <i class="el-icon-user" />
-        admin
-      </template>
-      <template v-else>
-        <img class="avatar" :src="userinfo.avatar" />
-        {{ userinfo.name }}
-      </template>
+      <i class="el-icon-user" />
+      admin
     </div>
     <template #dropdown>
       <el-dropdown-menu>
@@ -19,21 +13,18 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
-import { useUserinfo } from '@/components/Avatar/hooks/useUserinfo'
 import { useApp } from '@/pinia/modules/app'
-import {Logout} from '@/api/common'
+import { Logout } from '@/api/common'
 
-    const router = useRouter()
+const router = useRouter()
 
-    const { userinfo } = useUserinfo()
-
-    // 退出
+// 退出
 const logout = async () => {
-      await Logout()
-      // 清除token
-      useApp().clearToken()
-      router.push('/login')
-    }
+  await Logout()
+  // 清除token
+  useApp().clearToken()
+  router.push('/login')
+}
 </script>
 
 <style lang="scss" scoped>
