@@ -141,20 +141,19 @@ export default defineComponent({
     padding: 0 24px;
     box-sizing: border-box;
     margin: 160px auto 0;
-    :deep {
-      .el-input__wrapper {
-        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-        background: rgba(0, 0, 0, 0.1);
-      }
-      .el-input-group--append > .el-input__wrapper {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-      .el-input-group--prepend > .el-input__wrapper {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
+    :deep(.el-input__wrapper) {
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      background: rgba(0, 0, 0, 0.1);
     }
+    :deep(.el-input-group--append > .el-input__wrapper) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    :deep(.el-input-group--prepend > .el-input__wrapper) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
     .title {
       color: #fff;
       text-align: center;
@@ -181,15 +180,13 @@ export default defineComponent({
   position: fixed;
   right: 20px;
   top: 20px;
-  :deep {
-    .change-lang {
-      height: 24px;
-      &:hover {
-        background: none;
-      }
-      .icon {
-        color: #fff;
-      }
+  :deep(.change-lang) {
+    height: 24px;
+    &:hover {
+      background: none;
+    }
+    .icon {
+      color: #fff;
     }
   }
 }

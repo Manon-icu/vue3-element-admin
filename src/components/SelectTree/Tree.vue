@@ -94,12 +94,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 .common-tree {
   overflow: auto;
-  :deep {
-    .el-tree-node {
-      &.is-checked {
-        > .el-tree-node__content {
-          color: $mainColor;
-        }
+  :deep(.el-tree-node) {
+    &.is-checked {
+      > .el-tree-node__content {
+        color: $mainColor;
       }
     }
   }
