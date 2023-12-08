@@ -54,7 +54,6 @@ import Add from './add.vue'
 
 const editRef = ref(null)
 const addRef = ref(null)
-const id = ref()
 const pagination = reactive({
   page: 1,
   page_size: 20,
@@ -75,7 +74,10 @@ const tableData = ref([
 ])
 
 const onSearch = async () => {
-  const { data } = await getBannerList(pagination)
+  const { data } = await getBannerList({
+    page: pagination.page,
+    page_size: pagination.page_size,
+  })
   tableData.value = data?.items
   pagination.total = data?.total
 }
