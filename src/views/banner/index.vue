@@ -20,7 +20,7 @@
           @confirm="onSwitchStatus(row)"
         >
           <template #reference>
-            <el-button>{{ row.status ? '禁用' : '启用' }}</el-button>
+            <el-button>{{ row.status === 1 ? '禁用' : '启用' }}</el-button>
           </template>
         </el-popconfirm>
       </template>
