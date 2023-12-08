@@ -7,7 +7,6 @@ const service = axios.create({
   baseURL: 'http://api.montessori-hz.com/',
   // process.env.NODE_ENV === 'production' ? 'http://api.montessori-hz.com' : '',
   timeout: 10000,
-  // withCredentials: true,
 })
 
 // 拦截请求

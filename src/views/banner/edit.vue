@@ -5,10 +5,10 @@
         <el-input disabled :value="formData.id"></el-input>
       </el-form-item>
       <el-form-item prop="url" label="图片链接:">
-        <el-input :value="formData.url"></el-input>
+        <el-input v-model="formData.url"></el-input>
       </el-form-item>
       <el-form-item prop="link" label="跳转链接:">
-        <el-input :value="formData.link"></el-input>
+        <el-input v-model="formData.link"></el-input>
       </el-form-item>
       <el-form-item prop="created_at" label="创建时间:" disabled>
         <el-input disabled :value="formData.created_at"></el-input>
@@ -57,7 +57,8 @@ const hide = () => {
 const onConfirm = async () => {
   try {
     loading.value = true
-    const res = await editBanner(formData.value)
+    await editBanner(formData.value.id, formData.value)
+    hide()
     ElMessage.success('编辑成功')
   } catch (error) {
     console.log('🚀 ~ file: edit.vue:61 ~ onConfirm ~ error:', error)
