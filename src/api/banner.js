@@ -48,3 +48,12 @@ export const disableBanner = id => {
     method: 'post',
   })
 }
+
+// 状态反转
+export const toggleBannerStatus = data => {
+  return request({
+    url: `/admin/banner-config/reverse-status`,
+    method: 'post',
+    data,
+  })
+}

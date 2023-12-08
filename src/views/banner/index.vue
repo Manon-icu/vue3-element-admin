@@ -48,7 +48,7 @@
 </template>
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { getBannerList, enableBanner, disableBanner } from '@/api/banner'
+import { getBannerList, toggleBannerStatus } from '@/api/banner'
 import Edit from './edit.vue'
 import Add from './add.vue'
 
@@ -70,12 +70,8 @@ const onSearch = async () => {
   pagination.total = data?.total
 }
 
-const onSwitchStatus = row => {
-  if (row.status) {
-    disableBanner(row.id)
-  } else {
-    enableBanner(row.id)
-  }
+const onSwitchStatus = async row => {
+  await toggleBannerStatus({ id: row.id })
 }
 
 const onEdit = row => {
