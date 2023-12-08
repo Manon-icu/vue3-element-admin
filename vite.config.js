@@ -45,17 +45,6 @@ export default env => {
         '@': path.resolve(__dirname, 'src'),
       },
     },
-    // server: {
-    //   port: 3001,
-    //   open: true,
-    //   proxy: {
-    //     '/admin': {
-    //       target: 'http://api.montessori-hz.com/admin', // 后端接口的域名
-    //       changeOrigin: true,
-    //       rewrite: path => path.replace(/^\/admin/, ''),
-    //     },
-    //   },
-    // },
     esbuild: false,
     build: {
       minify: 'terser', // 'esbuild

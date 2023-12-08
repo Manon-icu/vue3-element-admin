@@ -1,11 +1,8 @@
 <template>
   <el-form>
-    <el-form-item label="ID">
-      <el-input v-model="id"></el-input>
-    </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSearch">搜索</el-button>
-      <el-button type="primary" @click="onSearch">添加</el-button>
+      <el-button type="primary" @click="onAdd">添加</el-button>
     </el-form-item>
   </el-form>
   <el-table bordered :data="tableData">
@@ -18,10 +15,14 @@
     <el-table-column prop="module_type_desc" label="类型说明"></el-table-column>
     <el-table-column prop="status" label="状态">
       <template #default="{ row }">
-        <el-switch
-          v-model="row.status"
-          @change="onSwitchStatus(row)"
-        ></el-switch>
+        <el-popconfirm
+          :title="`Are you sure to ${row.status ? 'disable' : 'enable'} this?`"
+          @confirm="onSwitchStatus(row)"
+        >
+          <template #reference>
+            <el-button>{{ row.status ? '禁用' : '启用' }}</el-button>
+          </template>
+        </el-popconfirm>
       </template>
     </el-table-column>
     <el-table-column prop="operation" label="编辑">
@@ -30,15 +31,35 @@
       </template>
     </el-table-column>
   </el-table>
+  <div class="pagination">
+    <el-pagination
+      background
+      layout="total, prev, pager, next"
+      :total="pagination.total"
+      v-model:current-page="pagination.page"
+      :page-size="pagination.page_size"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+  </div>
+
   <Edit ref="editRef" />
+  <Add ref="addRef" />
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { getBannerList, enableBanner, disableBanner } from '@/api/banner'
 import Edit from './edit.vue'
+import Add from './add.vue'
 
 const editRef = ref(null)
+const addRef = ref(null)
 const id = ref()
+const pagination = reactive({
+  page: 1,
+  page_size: 20,
+  total: 0,
+})
 const tableData = ref([
   // 模拟数据
   {
@@ -94,20 +115,48 @@ const tableData = ref([
 ])
 
 const onSearch = async () => {
-  const { data } = await getBannerList({ id: id.value, page: 1, page_size: 20 })
+  const { data } = await getBannerList(pagination)
   tableData.value = data?.items
+  pagination.total = data?.total
 }
 
 const onSwitchStatus = row => {
   if (row.status) {
     disableBanner(row.id)
   } else {
+    console.log(123)
     enableBanner(row.id)
   }
 }
 
 const onEdit = row => {
-  console.log('🚀 ~ file: index.vue:58 ~ onEdit ~ row:', row)
   editRef.value.show(row)
 }
+
+const onAdd = () => {
+  addRef.value.show()
+}
+
+const handleCurrentChange = async val => {
+  pagination.page = val
+  await onSearch()
+}
+const handleSizeChange = async val => {
+  pagination.page_size = val
+  pagination.page = 1
+  await onSearch()
+}
+
+onMounted(async () => {
+  pagination.page = 1
+  await onSearch()
+})
 </script>
+
+<style scoped lang="scss">
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+</style>
