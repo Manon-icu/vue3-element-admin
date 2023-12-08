@@ -44,6 +44,6 @@ export const enableBanner = id => {
 export const disableBanner = id => {
   return request({
     url: `/admin/banner-configs/${id}/disable`,
-    method: 'put',
+    method: 'post',
   })
 }

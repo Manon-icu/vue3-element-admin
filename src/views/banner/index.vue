@@ -86,7 +86,6 @@ const onSwitchStatus = row => {
   if (row.status) {
     disableBanner(row.id)
   } else {
-    console.log(123)
     enableBanner(row.id)
   }
 }
