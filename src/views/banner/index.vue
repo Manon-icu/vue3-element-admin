@@ -59,19 +59,7 @@ const pagination = reactive({
   page_size: 20,
   total: 0,
 })
-const tableData = ref([
-  // 模拟数据
-  {
-    id: 1,
-    url: 'https://www.baidu.com/img/flexible/logo/pc/result.png',
-    link: 'https://www.baidu.com',
-    created_at: '2021-08-01 12:00:00',
-    updated_at: '2021-08-01 12:00:00',
-    module_type: 1,
-    module_type_desc: '首页',
-    status: 1,
-  },
-])
+const tableData = ref([])
 
 const onSearch = async () => {
   const { data } = await getBannerList({

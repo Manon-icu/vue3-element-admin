@@ -23,7 +23,7 @@
         <el-input disabled :value="formData.module_type_desc"></el-input>
       </el-form-item>
       <el-form-item prop="status" label="状态:" disabled>
-        {{ formData.status ? '启用' : '禁止' }}
+        {{ formData.status_desc }}
       </el-form-item>
       <el-form-item>
         <el-button type="default" @click="hide">取消</el-button>
