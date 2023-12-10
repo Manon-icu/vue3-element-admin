@@ -1,36 +1,11 @@
-<template>
-    <div class="view-btn"> <el-button type="primary" @click="onAdd">添加</el-button></div>
-    <div class="view-content"> 
-      <div class="view-filter"> 
-        <el-card class="box-card">
-         <el-form style="display: flex;">
-      <el-form-item class="search-item">
-        <el-input
-            placeholder="请输入标题"
-            v-model="title"
-          >
-          </el-input>
+<template>  
+我的团队
+    <!-- <el-form>
+      <el-form-item>
+        <el-button type="primary" @click="onAdd">添加</el-button>
       </el-form-item>
-      <el-form-item class="search-item">
-        <el-select v-model="status" @change="bleemTypeChange">
-                <el-option label="全部" value="-1"></el-option>
-                <el-option label="有效" value="1"></el-option>
-                <el-option label="无效" value="0"></el-option>
-              </el-select>
-     
-        </el-form-item>
-        <el-form-item class="search-item">
-              <el-button type="primary" @click="onSearch">搜索</el-button>
-        </el-form-item>
-
-       
-    </el-form>
-        </el-card>
-    </div>
-    </div>
-   
-
-    <el-table   v-loading="loading" bordered :data="tableData">
+    </el-form> -->
+    <!-- <el-table   v-loading="loading" bordered :data="tableData">
       <el-table-column width="50" prop="id" label="ID"></el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
       <el-table-column prop="occurrence_time" label="发生时间"></el-table-column>
@@ -64,7 +39,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
-    </div>
+    </div> -->
   
   </template>
   <script setup>
@@ -114,19 +89,11 @@
     justify-content: center;
     margin-top: 20px;
   }
-.view-filter {
-  margin-bottom: 16px;
-}
-.el-form-item {
-  margin-bottom: 0;
-}
-.view-btn{
-  margin-bottom: 10px;
-  display: flex;
-    justify-content: flex-end;
-}
-.search-item{
-  margin-left: 10px;
+  .clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
   </style>
   

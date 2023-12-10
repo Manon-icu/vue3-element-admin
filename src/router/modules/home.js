@@ -3,6 +3,7 @@ const Home = () => import('@/views/home/index.vue')
 const Banner = () => import('@/views/banner/index.vue')
 const Album = () => import('@/views/album/index.vue')
 const About = () => import('@/views/about/index.vue')
+const Team = () => import('@/views/team/index.vue')
 const Training = () => import('@/views/training/index.vue')
 const News = () => import('@/views/news/index.vue')
 
@@ -49,6 +50,15 @@ export default [
         component: About,
         meta: {
           title: '关于我们',
+          affix: true,
+        },
+      },
+      {
+        path: '/my-team',
+        name: 'my team',
+        component: Team,
+        meta: {
+          title: '我的团队',
           affix: true,
         },
       },
