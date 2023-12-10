@@ -8,7 +8,8 @@
         <el-input v-model="formData.job_title"></el-input>
       </el-form-item>
       <el-form-item prop="avatar_url" label="头像:">
-        <el-input v-model="formData.avatar_url"></el-input>
+        <Upload v-model="formData.avatar_url" />
+        <!-- <el-input v-model="formData.avatar_url"></el-input> -->
       </el-form-item>
       <el-form-item prop="introduce" label="简介:">
         <el-input type="textarea" v-model="formData.introduce"></el-input>
@@ -36,6 +37,7 @@
 import { ref, reactive } from 'vue'
 import { addTeamMember } from '@/api/about'
 import { ElMessage } from 'element-plus'
+import Upload from '@/components/Upload/index.vue'
 
 const props = defineProps({
   cb: {
@@ -84,6 +86,9 @@ const onConfirm = async () => {
   } finally {
     loading.value = false
   }
+}
+const onSuccess = val => {
+  formData.avatar_url = val.data.url
 }
 
 defineExpose({
