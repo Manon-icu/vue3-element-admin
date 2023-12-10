@@ -5,6 +5,7 @@ export const addTeamMember = data => {
   return request({
     url: '/admin/team-members',
     data,
+    method: 'post',
   })
 }
 
@@ -29,6 +30,7 @@ export const getTeamMemberList = params => {
   return request({
     url: '/admin/team-members',
     params,
+    method: 'get',
   })
 }
 
@@ -45,5 +47,12 @@ export const disableTeamMember = id => {
   return request({
     url: `/admin/team-members/${id}/disable`,
     method: 'post',
+  })
+}
+export const toggleTeamMemberStatus = data => {
+  return request({
+    url: `/admin/team-member/reverse-status`,
+    method: 'post',
+    data,
   })
 }
