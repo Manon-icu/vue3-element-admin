@@ -18,8 +18,8 @@
     <el-form-item label="状态">
       <el-select v-model="formData.status">
         <el-option label="全部" value="-1"></el-option>
-        <el-option label="无效" value="0"></el-option>
-        <el-option label="有效" value="1"></el-option>
+        <el-option label="无效" value="1"></el-option>
+        <el-option label="有效" value="2"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item>

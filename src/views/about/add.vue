@@ -9,7 +9,6 @@
       </el-form-item>
       <el-form-item prop="avatar_url" label="头像:">
         <Upload v-model="formData.avatar_url" />
-        <!-- <el-input v-model="formData.avatar_url"></el-input> -->
       </el-form-item>
       <el-form-item prop="introduce" label="简介:">
         <el-input type="textarea" v-model="formData.introduce"></el-input>
