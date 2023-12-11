@@ -1,26 +1,20 @@
 <template>
-  <el-dialog v-model="visible" title="编辑">
+  <el-dialog v-model="visible" title="编辑" width="85%">
     <el-form label-width="120" :model="formData" :rules="rules">
-      <el-form-item prop="nick_name" label="昵称:">
-        <el-input v-model="formData.nick_name"></el-input>
+      <el-form-item prop="title" label="标题:">
+        <el-input v-model="formData.title"></el-input>
       </el-form-item>
-      <el-form-item prop="job_title" label="职称:">
-        <el-input v-model="formData.job_title"></el-input>
+      <el-form-item prop="occurrence_time" label="生效时间:">
+        <el-date-picker v-model="formData.occurrence_time"></el-date-picker>
       </el-form-item>
-      <el-form-item prop="avatar_url" label="头像:">
-        <Upload v-model="formData.avatar_url" />
+      <el-form-item prop="cover_img_url" label="封面:">
+        <Upload v-model="formData.cover_img_url" />
       </el-form-item>
-      <el-form-item prop="introduce" label="简介:">
-        <el-input type="textarea" v-model="formData.introduce"></el-input>
+      <el-form-item prop="abstract" label="简介:">
+        <el-input type="textarea" v-model="formData.abstract"></el-input>
       </el-form-item>
-      <el-form-item prop="group_type" label="团队分组:">
-        <el-select v-model="formData.group_type">
-          <el-option label="培训师团队" value="1"></el-option>
-          <el-option label="培训中心团队" value="2"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="sort_index" label="排序:">
-        <el-input v-model="formData.sort_index"></el-input>
+      <el-form-item prop="content" label="内容:">
+        <MEditor v-model="formData.content" />
       </el-form-item>
       <el-form-item>
         <el-button type="default" @click="hide">取消</el-button>
@@ -33,10 +27,11 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-import { addTeamMember } from '@/api/about'
+import { ref } from 'vue'
+import { createNews } from '@/api/news'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
+import MEditor from '@/components/MEditor/index.vue'
 
 const props = defineProps({
   cb: {
@@ -45,27 +40,30 @@ const props = defineProps({
   },
 })
 
-const formData = reactive({
-  nick_name: '',
-  job_title: '',
-  avatar_url: '',
-  introduce: '',
-  group_type: '',
-  sort_index: '',
+const formData = ref({
+  title: '',
+  occurrence_time: '',
+  cover_img_url: '',
+  abstract: '',
+  content: '',
 })
 const visible = ref(false)
 const loading = ref(false)
 const rules = {
-  nick_name: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
-  job_title: [{ required: true, message: '请输入职称', trigger: 'blur' }],
-  avatar_url: [{ required: true, message: '请输入头像', trigger: 'blur' }],
-  introduce: [{ required: true, message: '请输入简介', trigger: 'blur' }],
-  group_type: [{ required: true, message: '请输入团队分组', trigger: 'blur' }],
-  sort_index: [{ required: true, message: '请输入排序', trigger: 'blur' }],
+  title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+  occurrence_time: [
+    { required: true, message: '请输入生效时间', trigger: 'blur' },
+  ],
+  cover_img_url: [
+    { required: true, message: '请输入封面链接', trigger: 'blur' },
+  ],
+  abstract: [{ required: true, message: '请输入简介', trigger: 'blur' }],
+  content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
 }
 
 const show = () => {
   visible.value = true
+  formData.value = {}
 }
 
 const hide = () => {
@@ -76,18 +74,15 @@ const hide = () => {
 const onConfirm = async () => {
   try {
     loading.value = true
-    await addTeamMember(formData)
+    await createNews(formData.value.id, formData.value)
     await props.cb?.()
     hide()
-    ElMessage.success('添加成功')
+    ElMessage.success('编辑成功')
   } catch (error) {
     console.log('🚀 ~ file: edit.vue:61 ~ onConfirm ~ error:', error)
   } finally {
     loading.value = false
   }
-}
-const onSuccess = val => {
-  formData.avatar_url = val.data.url
 }
 
 defineExpose({
