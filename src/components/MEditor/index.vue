@@ -12,6 +12,7 @@
       :defaultConfig="editorConfig"
       :mode="mode"
       @onCreated="handleCreated"
+      @onChange="handleChange"
     />
   </div>
 </template>
@@ -38,10 +39,13 @@ const valueHtml = ref('<p>hello</p>')
 // 模拟 ajax 异步获取内容
 onMounted(() => {
   setTimeout(() => {
-    $emit('update:modelValue', props.modelValue)
-    valueHtml.value = ''
+    valueHtml.value = props.modelValue
   }, 1500)
 })
+
+const handleChange = ({ getHtml }) => {
+  $emit('update:modelValue', getHtml())
+}
 
 const toolbarConfig = {}
 const editorConfig = {

@@ -23,9 +23,9 @@ export const createNews = data => {
   })
 }
 
-export const editNews = (id, data) => {
+export const editNews = data => {
   return request({
-    url: `/admin/news/${id}`,
+    url: `/admin/news/${data.id}`,
     method: 'put',
     data,
   })
