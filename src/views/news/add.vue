@@ -5,7 +5,10 @@
         <el-input v-model="formData.title"></el-input>
       </el-form-item>
       <el-form-item prop="occurrence_time" label="生效时间:">
-        <el-date-picker v-model="formData.occurrence_time"></el-date-picker>
+        <el-date-picker
+          :value-format="'YYYY-MM-DD HH:mm:ss'"
+          v-model="formData.occurrence_time"
+        ></el-date-picker>
       </el-form-item>
       <el-form-item prop="cover_img_url" label="封面:">
         <Upload v-model="formData.cover_img_url" />
@@ -74,7 +77,7 @@ const hide = () => {
 const onConfirm = async () => {
   try {
     loading.value = true
-    await createNews(formData.value.id, formData.value)
+    await createNews(formData.value)
     await props.cb?.()
     hide()
     ElMessage.success('编辑成功')

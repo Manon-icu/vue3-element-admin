@@ -23,9 +23,9 @@ export const createNews = data => {
   })
 }
 
-export const editNews = (id, data) => {
+export const editNews = data => {
   return request({
-    url: `/admin/news/${id}`,
+    url: `/admin/news/${data.id}`,
     method: 'put',
     data,
   })
@@ -33,7 +33,7 @@ export const editNews = (id, data) => {
 
 export const toggleStatus = data => {
   return request({
-    url: `/admin/news/${id}/reverse-status`,
+    url: `/admin/news/reverse-status`,
     method: 'post',
     data,
   })

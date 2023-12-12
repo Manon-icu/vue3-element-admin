@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" title="编辑" width="85%">
+  <el-dialog v-model="visible" title="编辑" width="85%" v-loading="loading">
     <el-form label-width="120" :model="formData" :rules="rules">
       <el-form-item prop="title" label="标题:">
         <el-input v-model="formData.title"></el-input>
@@ -28,7 +28,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { editNews } from '@/api/news'
+import { editNews, getNewsDetail } from '@/api/news'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 import MEditor from '@/components/MEditor/index.vue'
@@ -41,6 +41,7 @@ const props = defineProps({
 })
 
 const formData = ref({
+  id: '',
   title: '',
   occurrence_time: '',
   cover_img_url: '',
@@ -61,9 +62,13 @@ const rules = {
   content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
 }
 
-const show = row => {
+const show = async ({ id }) => {
+  const { data } = await getNewsDetail(id)
+  formData.value.id = data.id
+  Object.keys(formData.value).forEach(key => {
+    formData.value[key] = data[key]
+  })
   visible.value = true
-  formData.value = row
 }
 
 const hide = () => {
@@ -74,7 +79,7 @@ const hide = () => {
 const onConfirm = async () => {
   try {
     loading.value = true
-    await editNews(formData.value.id, formData.value)
+    await editNews(formData.value)
     await props.cb?.()
     hide()
     ElMessage.success('编辑成功')

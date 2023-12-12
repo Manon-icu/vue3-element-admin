@@ -107,6 +107,7 @@ const onSearch = async () => {
 
 const onSwitchStatus = async row => {
   await toggleStatus({ id: row.id })
+  await onSearch()
 }
 
 const onEdit = row => {
