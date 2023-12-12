@@ -7,30 +7,29 @@
       <el-form-item class="search-item">
         <el-input
             placeholder="请输入标题"
-            v-model="title"
+            v-model="parameter.title"
           >
           </el-input>
       </el-form-item>
       <el-form-item class="search-item">
-        <el-select v-model="status" @change="bleemTypeChange">
+        <el-select v-model="parameter.status" @change="handleStatusChange">
                 <el-option label="全部" value="-1"></el-option>
                 <el-option label="有效" value="1"></el-option>
-                <el-option label="无效" value="0"></el-option>
+                <el-option label="无效" value="2"></el-option>
               </el-select>
      
         </el-form-item>
         <el-form-item class="search-item">
               <el-button type="primary" @click="onSearch">搜索</el-button>
         </el-form-item>
-
-       
+        <el-form-item class="search-item">
+              <el-button  @click="onReset">重置</el-button>
+        </el-form-item>
     </el-form>
         </el-card>
     </div>
     </div>
-   
-
-    <el-table   v-loading="loading" bordered :data="tableData">
+    <el-table  v-loading="loading" bordered :data="tableData">
       <el-table-column width="50" prop="id" label="ID"></el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
       <el-table-column prop="occurrence_time" label="发生时间"></el-table-column>
@@ -41,8 +40,10 @@
         <template #default="{ row }">
               <el-switch
               style="margin-right: 10px"
-          v-model="row.status"
-          @change="onSwitch(row)"
+              v-model="row.status"
+              :active-value="1"
+              :inactive-value="2"
+              @change="onSwitchStatus(row.id)"
         ></el-switch>
 
           <el-link type="primary" @click="onEdit(row)"
@@ -66,32 +67,63 @@
       />
     </div>
   
+  <Add ref="addRef"  :cb="onSearch" />
+  <Detail ref="detailRef"   />
   </template>
   <script setup>
-  import { ref, reactive, onMounted } from 'vue'
-  import { getPhotoAlbumsList } from '@/api/album'
-  
+  import { ref, reactive, onMounted ,toRefs} from 'vue'
+  import { getPhotoAlbumsList,reverseStatusPhoto } from '@/api/album'
+import Add from './add.vue'
+import Detail from './detail.vue'
+
+const addRef = ref(null)
+const detailRef = ref(null)
   const pagination = reactive({
     page: 1,
     page_size: 20,
     total: 0,
-
   })
+  const parameter = reactive({
+    status: '-1',
+    title: '',
+  })
+
+let loading = ref(false)
   const tableData = ref([])
-  
   const onSearch = async () => {
+    loading = true
     const { data } = await getPhotoAlbumsList({
       page: pagination.page,
       page_size: pagination.page_size,
+      status:parameter.status,
+      title:parameter.title
     })
     tableData.value = data?.items
     pagination.total = data?.total
+    loading = false
   }
-  
-  const onSwitch = row => {
-    console.log(row,"rowoowowo")
+  const onReset = async () => {
+    pagination.page = 1
+    parameter.status = '-1'
+    parameter.title = ''
+    await onSearch()
+  }
+  const onSwitchStatus = async id => {
+  await reverseStatusPhoto({ id })
 }
   
+const onAdd = () => {
+  addRef.value.show({id:-1})
+}
+
+const onEdit = row => {
+  addRef.value.show(row)
+}
+
+const onDetail = row => {
+  detailRef.value.show(row)
+}
+
   const handleCurrentChange = async val => {
     pagination.page = val
     await onSearch()
@@ -100,6 +132,11 @@
     pagination.page_size = val
     pagination.page = 1
     await onSearch() 
+  }
+
+  const handleStatusChange = async val => {
+    console.log(val,"valval")
+    parameter.status = val
   }
   
   onMounted(async () => {
