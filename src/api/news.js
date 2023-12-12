@@ -33,7 +33,7 @@ export const editNews = data => {
 
 export const toggleStatus = data => {
   return request({
-    url: `/admin/news/${id}/reverse-status`,
+    url: `/admin/news/reverse-status`,
     method: 'post',
     data,
   })
