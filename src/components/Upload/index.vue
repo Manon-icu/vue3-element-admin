@@ -37,6 +37,7 @@ const props = defineProps({
 const $emit = defineEmits(['update:modelValue'])
 // 成功后更新 model
 const onSuccess = val => {
+  console.log(val,"1111111111")
   $emit('update:modelValue', val?.data?.file_url)
 }
 //移除或替换

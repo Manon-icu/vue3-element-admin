@@ -4,14 +4,15 @@
       <div class="view-filter"> 
         <el-card class="box-card">
          <el-form style="display: flex;">
-      <el-form-item class="search-item" lable="标题:">
-        <el-input
-            placeholder="请输入标题"
-            v-model="parameter.title"
-          >
-          </el-input>
+
+      <el-form-item class="search-item" label="开始时间:">
+        <el-date-picker v-model="parameter.start_time"  value-format="YYYY-MM-DD hh:mm:ss" type="datetime" placeholder="选择开始时间"></el-date-picker>
       </el-form-item>
-      <el-form-item class="search-item" lable="状态:">
+      <el-form-item class="search-item" label="结束时间:">
+        <el-date-picker v-model="parameter.end_time"  value-format="YYYY-MM-DD hh:mm:ss" type="datetime" placeholder="选择结束时间"></el-date-picker>
+      </el-form-item>
+
+      <el-form-item class="search-item" label="状态:">
         <el-select v-model="parameter.status" @change="handleStatusChange">
                 <el-option label="全部" value="-1"></el-option>
                 <el-option label="有效" value="1"></el-option>
@@ -31,10 +32,9 @@
     </div>
     <el-table  v-loading="loading" bordered :data="tableData">
       <el-table-column width="50" prop="id" label="ID"></el-table-column>
-      <el-table-column prop="title"   label="标题"></el-table-column>
-      <el-table-column prop="occurrence_time"   label="发生时间"></el-table-column>
       <el-table-column prop="created_at"   label="创建时间"></el-table-column>
-      <el-table-column prop="updated_at"   label="更新时间"></el-table-column>
+      <el-table-column prop="updated_at"   label="结束时间"></el-table-column>
+      <el-table-column prop="content"   label="内容"></el-table-column>
       <el-table-column width="80"  prop="status_desc" label="状态"> </el-table-column>
       <el-table-column prop="operation"   label="操作">
         <template #default="{ row }">
@@ -50,9 +50,6 @@
           >
           <el-link style="margin-left: 10px;" type="primary" @click="onDetail(row)"
             >详情</el-link
-          >
-          <el-link style="margin-left: 10px;" type="primary" @click="onGoFileList(row)"
-            >文件列表</el-link
           >
         </template>
       </el-table-column>
@@ -74,7 +71,7 @@
   </template>
   <script setup>
   import { ref, reactive, onMounted ,toRefs} from 'vue'
-  import { getPhotoAlbumsList,reverseStatusPhoto } from '@/api/album'
+  import { getHistoriesList,reverseHistoryStatus } from '@/api/course'
 import { useRouter } from 'vue-router'
 import Add from './add.vue'
 import Detail from './detail.vue'
@@ -89,18 +86,18 @@ const detailRef = ref(null)
   })
   const parameter = reactive({
     status: '-1',
-    title: '',
+    start_time:'',
+    end_time:''
   })
 
 let loading = ref(false)
   const tableData = ref([])
   const onSearch = async () => {
     loading = true
-    const { data } = await getPhotoAlbumsList({
-      page: pagination.page,
+    const { data } = await getHistoriesList({
+      page_index: pagination.page,
       page_size: pagination.page_size,
-      status:parameter.status,
-      title:parameter.title
+      ...parameter
     })
     tableData.value = data?.items
     pagination.total = data?.total
@@ -109,27 +106,18 @@ let loading = ref(false)
   const onReset = async () => {
     pagination.page = 1
     parameter.status = '-1'
-    parameter.title = ''
+    parameter.start_time = ''
+    parameter.end_time = ''
     await onSearch()
   }
   const onSwitchStatus = async id => {
-  await reverseStatusPhoto({ id })
+  await reverseHistoryStatus({ id })
   await onSearch()
 
 }
   
 const onAdd = () => {
   addRef.value.show({id:-1})
-}
-const onGoFileList = (row) => {
-  console.log(row.id,'asd')
-  router.push({
-        name: 'file',
-        params: {
-          id: row.id
-        }
-    })
-  
 }
 
 
