@@ -6,6 +6,7 @@
     :auto-upload="true"
     :on-success="onSuccess"
     :on-remove="onRemove"
+    accept="file/*"
     :limit="limit"
   >
     <template #trigger>
@@ -28,6 +29,10 @@ const props = defineProps({
   modelValue: {
     type: String,
     required: true,
+  },
+  EditfileUrl: {
+    type: String,
+    default: 'https://lmg.jj20.com/up/allimg/1113/051220112022/200512112022-1-1200.jpg',
   },
   limit: {
     type: Number,

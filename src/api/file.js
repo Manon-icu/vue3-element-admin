@@ -30,7 +30,7 @@ export const editPhotoAlbumsFiles = (id, data) => {
 // 相册文件详情
 export const detailPhotoAlbumsFile = (id) => {
   return request({
-    url: `/admin/photo-albums-files/${id}`,
+    url: `/admin/photo-album-files/${id}`,
     method: 'get',
   })
 }

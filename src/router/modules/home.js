@@ -92,14 +92,15 @@ export default [
         },
       },
       {
-        path: '/file/:id',
+          path:'/file/:id', 
         name: 'file',
         component: file,
+        hidden:true,
         meta: {
           title: '文件列表',
-          affix: true,
         },
-      },
+      }
+
     ],
   },
 ]

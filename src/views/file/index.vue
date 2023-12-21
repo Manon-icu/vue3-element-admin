@@ -10,7 +10,6 @@
                 <el-option label="照片" value="1"></el-option>
                 <el-option label="视频" value="2"></el-option>
               </el-select>
-     
         </el-form-item>
       <el-form-item class="search-item" label="状态:">
         <el-select v-model="parameter.status" @change="handleStatusChange">

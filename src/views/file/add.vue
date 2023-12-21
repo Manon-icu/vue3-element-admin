@@ -30,7 +30,7 @@
     title: '添加',
     isAdd:1,
   })
-  const fieldForm = ref();
+  const fieldForm = ref(null); // 引用表单实例  
   const formData = reactive({
     photo_album_id:'',
     file_url: '',
@@ -48,22 +48,33 @@
   staticData.title = row.isAdd==1?'添加':'编辑'
     formData.file_url = row.isAdd==1?'': row.file_url
     formData.photo_album_id =row.photo_album_id?row.photo_album_id:''
+    if(row.isAdd==1){
+    }
 }
-  
+    
+const resetForm = () => {
+    fieldForm.value.resetFields();
+  }
   const hide = () => {
     visible.value = false
   }
-  
+  function isImageType(str) {  
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif','.bmp','.PNG','.JPG','.JPEG','.BMP','.GIF'];  
+  'png', 'jpg', 'jpeg', 'bmp', 'gif'
+  return imageExtensions.some(extension => str.endsWith(extension));  
+}
   const onConfirm = async () => {
     fieldForm.value.validate(async valid =>{
         if (valid) {
             loading.value = true
+            const fileType = isImageType(formData.file_url)?1:2
+            formData.file_type = fileType
             if(staticData.title=='添加') {
               await addPhotoAlbumsFiles(formData)
             }else{
               const editFormData = {
                 file_url:formData.file_url,
-                file_type:1
+                file_type:fileType
               }
               await editPhotoAlbumsFiles(formData.photo_album_id, editFormData)
             }
@@ -72,6 +83,12 @@
       hide()
       ElMessage.success(`{staticData.title}成功`)
       loading.value = false
+      const resetFormData = {
+                file_url:'',
+                file_type:1,
+                photo_album_id:'',
+              }
+              formData =resetFormData
         }
     })
   
@@ -84,6 +101,7 @@
   defineExpose({
     show,
     hide,
+    resetForm
   })
   </script>
   
