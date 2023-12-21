@@ -18,15 +18,15 @@ export default [
     },
     icon: 'icon-home',
     children: [
-      {
-        path: '',
-        name: 'Home',
-        component: Home,
-        meta: {
-          title: '首页',
-          affix: true,
-        },
-      },
+      // {
+      //   path: '',
+      //   name: 'Home',
+      //   component: Home,
+      //   meta: {
+      //     title: '首页',
+      //     affix: true,
+      //   },
+      // },
       {
         path: '/banner',
         name: 'banner',
@@ -44,16 +44,16 @@ export default [
           title: '相册',
           affix: true,
         },
-      //   children:[
-      //     {
-      //       meta: {
-      //         title: '文件列表',
-      //       },
-      //         path:'/file/:id', 
-      //       name: 'file',
-      //       component: file,
-      //     }
-      // ]
+        //   children:[
+        //     {
+        //       meta: {
+        //         title: '文件列表',
+        //       },
+        //         path:'/file/:id',
+        //       name: 'file',
+        //       component: file,
+        //     }
+        // ]
       },
       {
         path: '/my-team',
@@ -92,15 +92,14 @@ export default [
         },
       },
       {
-          path:'/file/:id', 
+        path: '/file/:id',
         name: 'file',
         component: file,
-        hidden:true,
+        hidden: true,
         meta: {
           title: '文件列表',
         },
-      }
-
+      },
     ],
   },
 ]

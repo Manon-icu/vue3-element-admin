@@ -1,28 +1,13 @@
 <template>
   <el-dialog v-model="visible" title="编辑">
     <el-form label-width="120">
-      <!-- <el-form-item prop="id" label="ID:" disabled>
-        <el-input v-model="formData.id"></el-input>
-      </el-form-item> -->
       <el-form-item prop="url" label="图片链接:">
-        <el-input v-model="formData.url"></el-input>
+        <Upload v-model="formData.url" />
+        <!-- <el-input v-model="formData.url"></el-input> -->
       </el-form-item>
       <el-form-item prop="link" label="跳转链接:">
         <el-input v-model="formData.link"></el-input>
       </el-form-item>
-      <!-- <el-form-item prop="module_type" label="类型:" disabled>
-        <el-input disabled :value="formData.module_type"></el-input>
-      </el-form-item>
-      <el-form-item prop="module_type_desc" label="类型说明:" disabled>
-        <el-input disabled :value="formData.module_type_desc"></el-input>
-      </el-form-item>
-      <el-form-item prop="status" label="状态:" disabled>
-        <el-switch
-          active-text="启用"
-          inactive-text="禁用"
-          v-model="formData.status"
-        ></el-switch>
-      </el-form-item> -->
       <el-form-item>
         <el-button type="default" @click="hide">取消</el-button>
         <el-button type="primary" :loading="loading" @click="onConfirm">
@@ -37,6 +22,7 @@
 import { ref } from 'vue'
 import { addBanner } from '@/api/banner'
 import { ElMessage } from 'element-plus'
+import Upload from '@/components/Upload/index.vue'
 
 const formData = ref({})
 const visible = ref(false)

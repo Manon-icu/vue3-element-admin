@@ -1,7 +1,6 @@
 <template>
   <el-upload
     ref="uploadRef"
-    class="upload-demo"
     action="http://api.montessori-hz.com/admin/common/upload"
     :auto-upload="true"
     :on-success="onSuccess"
@@ -32,7 +31,8 @@ const props = defineProps({
   },
   EditfileUrl: {
     type: String,
-    default: 'https://lmg.jj20.com/up/allimg/1113/051220112022/200512112022-1-1200.jpg',
+    default:
+      'https://lmg.jj20.com/up/allimg/1113/051220112022/200512112022-1-1200.jpg',
   },
   limit: {
     type: Number,
@@ -42,7 +42,6 @@ const props = defineProps({
 const $emit = defineEmits(['update:modelValue'])
 // 成功后更新 model
 const onSuccess = val => {
-  console.log(val,"1111111111")
   $emit('update:modelValue', val?.data?.file_url)
 }
 //移除或替换

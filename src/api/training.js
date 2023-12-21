@@ -54,7 +54,7 @@ export const editCourse = (id, data) => {
 
 export const toggleCourseStatus = data => {
   return request({
-    url: `/admin/courses/reverse-status`,
+    url: `/admin/course/reverse-status`,
     method: 'POST',
     data,
   })
