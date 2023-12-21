@@ -4,19 +4,11 @@
     action="http://api.montessori-hz.com/admin/common/upload"
     :auto-upload="true"
     :on-success="onSuccess"
-    :on-remove="onRemove"
     accept="file/*"
     :limit="limit"
+    list-type="picture"
   >
-    <template #trigger>
-      <el-button type="primary">select file</el-button>
-    </template>
-    <template #file="{ file }">
-      <el-image
-        :src="file?.response?.data?.file_url"
-        style="width: 100px; height: 100px"
-      ></el-image>
-    </template>
+    <el-button type="primary">Click to upload</el-button>
   </el-upload>
 </template>
 
@@ -43,9 +35,5 @@ const $emit = defineEmits(['update:modelValue'])
 // 成功后更新 model
 const onSuccess = val => {
   $emit('update:modelValue', val?.data?.file_url)
-}
-//移除或替换
-const onRemove = () => {
-  $emit('update:modelValue', '')
 }
 </script>
