@@ -64,7 +64,7 @@ const rules = {
 
 const show = async ({ id }) => {
   const { data } = await getNewsDetail(id)
-  formData.value.id = data.id
+  formData.value = {...data}
   Object.keys(formData.value).forEach(key => {
     formData.value[key] = data[key]
   })

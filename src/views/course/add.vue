@@ -2,7 +2,7 @@
     <el-dialog v-model="visible" :title="staticData.title">
       <el-form label-width="120" :model="formData" :rules="rules" ref="fieldForm">
         <el-form-item prop="occurrence_time" label="发生时间:">
-        <el-date-picker v-model="formData.occurrence_time"  value-format="YYYY-MM-DD hh:mm:ss" type="datetime" placeholder="选择发生时间"></el-date-picker>
+        <el-date-picker v-model="formData.occurrence_time"  value-format="YYYY-MM" type="month" placeholder="选择发生时间"></el-date-picker>
       </el-form-item>
         <el-form-item prop="img_url1" label="图片1地址:">
           <Upload v-model="formData.img_url1" />
@@ -53,10 +53,10 @@
     { required: true, message: '请选择发生时间', trigger: 'blur' },
   ],
   img_url1: [
-    { required: true, message: '请选择图片1地址', trigger: 'blur' },
+    { required: false, message: '请选择图片1地址', trigger: 'blur' },
   ],
   img_url2: [
-    { required: true, message: '请选择图片2地址', trigger: 'blur' },
+    { required: false, message: '请选择图片2地址', trigger: 'blur' },
   ],
   content: [{ required: true, message: '请输入发生内容', trigger: 'blur' }],
 }
@@ -77,6 +77,7 @@
   const onConfirm = async () => {
     fieldForm.value.validate(async valid =>{
         if (valid) {
+          formData.occurrence_time =formData.occurrence_time? formData.occurrence_time+'-01':''
             loading.value = true
         if(formData.id!=-1){
             await editHistories(formData.id, formData)

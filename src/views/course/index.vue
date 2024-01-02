@@ -6,10 +6,10 @@
          <el-form style="display: flex;">
 
       <el-form-item class="search-item" label="开始时间:">
-        <el-date-picker v-model="parameter.start_time"  value-format="YYYY-MM-DD hh:mm:ss" type="datetime" placeholder="选择开始时间"></el-date-picker>
+        <el-date-picker v-model="parameter.start_time"  value-format="YYYY-MM" type="month" placeholder="选择开始时间"></el-date-picker>
       </el-form-item>
       <el-form-item class="search-item" label="结束时间:">
-        <el-date-picker v-model="parameter.end_time"  value-format="YYYY-MM-DD hh:mm:ss" type="datetime" placeholder="选择结束时间"></el-date-picker>
+        <el-date-picker v-model="parameter.end_time"  value-format="YYYY-MM" type="month" placeholder="选择结束时间"></el-date-picker>
       </el-form-item>
 
       <el-form-item class="search-item" label="状态:">
@@ -94,6 +94,8 @@ let loading = ref(false)
   const tableData = ref([])
   const onSearch = async () => {
     loading = true
+    parameter.start_time = parameter.start_time?parameter.start_time+'-01':''
+    parameter.end_time = parameter.end_time?parameter.end_time+'-01':''
     const { data } = await getHistoriesList({
       page_index: pagination.page,
       page_size: pagination.page_size,

@@ -148,7 +148,7 @@ const hide = () => {
 const onConfirm = async () => {
   try {
     loading.value = true
-    await editCourse(formData.id, formData.value)
+    await editCourse(formData.value.id, formData.value)
     await props.cb?.()
     hide()
     ElMessage.success('编辑成功')
