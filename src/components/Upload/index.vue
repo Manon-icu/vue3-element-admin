@@ -1,9 +1,11 @@
 <template>
   <el-upload
+    :file-list="fileList"
     ref="uploadRef"
     action="http://api.montessori-hz.com/admin/common/upload"
     :auto-upload="true"
     :on-success="onSuccess"
+    :on-exceed="onExceed"
     accept="file/*"
     :limit="limit"
     list-type="picture"
@@ -13,7 +15,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { genFileId } from 'element-plus'
 const uploadRef = ref(null)
 
 const props = defineProps({
@@ -31,9 +34,19 @@ const props = defineProps({
     default: 1,
   },
 })
+const fileList = computed(() => {
+  return props.modelValue ? [{ url: props.modelValue }] : []
+})
 const $emit = defineEmits(['update:modelValue'])
 // 成功后更新 model
 const onSuccess = val => {
   $emit('update:modelValue', val?.data?.file_url)
+}
+const onExceed = files => {
+  uploadRef.value.clearFiles()
+  const file = files[0]
+  file.uid = genFileId()
+  uploadRef.value.handleStart(file)
+  uploadRef.value.submit()
 }
 </script>

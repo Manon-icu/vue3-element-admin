@@ -37,16 +37,17 @@
 
 <script setup>
 import { ref } from 'vue'
-import { editBanner } from '@/api/banner'
+import { editBanner, getBanner } from '@/api/banner'
 import { ElMessage } from 'element-plus'
 
 const formData = ref({})
 const visible = ref(false)
 const loading = ref(false)
 
-const show = row => {
+const show = async row => {
   visible.value = true
-  formData.value = row
+  const { data } = await getBanner(row.id)
+  formData.value = data
 }
 
 const hide = () => {
