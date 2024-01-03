@@ -51,7 +51,7 @@ export const disableTeamMember = id => {
 }
 export const toggleTeamMemberStatus = data => {
   return request({
-    url: `/admin/team-member/reverse-status`,
+    url: `/admin/team-members/reverse-status`,
     method: 'post',
     data,
   })

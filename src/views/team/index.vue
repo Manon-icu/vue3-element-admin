@@ -119,6 +119,7 @@ const onSearch = async () => {
 
 const onSwitchStatus = async row => {
   await toggleTeamMemberStatus({ id: row.id })
+  await onSearch()
 }
 
 const onEdit = row => {
