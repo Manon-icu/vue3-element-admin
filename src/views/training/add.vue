@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item label="类型" prop="category">
         <el-select v-model="formData.category">
-          <el-option label="无" :value="0"></el-option>
+          <!-- <el-option label="无" :value="0"></el-option> -->
           <el-option label="新课上线" :value="1"></el-option>
           <el-option label="正在报名" :value="2"></el-option>
           <el-option label="精选课程" :value="3"></el-option>
@@ -14,9 +14,9 @@
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="formData.status">
-          <el-option label="全部" :value="-1"></el-option>
+          <!-- <el-option label="全部" :value="-1"></el-option> -->
           <el-option label="有效" :value="1"></el-option>
-          <el-option label="无效" :value="2"></el-option>
+          <!-- <el-option label="无效" :value="2"></el-option> -->
         </el-select>
       </el-form-item>
       <el-form-item label="课程时长数字" prop="duration_num">
@@ -40,6 +40,7 @@
       <el-form-item label="结束时间" prop="end_time">
         <el-date-picker
           v-model="formData.end_time"
+          value-format="YYYY-MM-DD"
           placeholder="请选择结束时间"
         ></el-date-picker>
       </el-form-item>
@@ -60,7 +61,7 @@
       </el-form-item>
       <el-form-item label="培训信息" prop="training_information_type">
         <el-select v-model="formData.training_information_type">
-          <el-option label="无" value="0"></el-option>
+          <!-- <el-option label="无" value="0"></el-option> -->
           <el-option label="Training infor-A" :value="1"></el-option>
           <el-option label="Training infor-B" :value="2"></el-option>
           <el-option label="Training infor-C" :value="3"></el-option>

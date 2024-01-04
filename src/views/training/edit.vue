@@ -14,7 +14,7 @@
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="formData.status">
-          <el-option label="全部" :value="-1"></el-option>
+          <!-- <el-option label="全部" :value="-1"></el-option> -->
           <el-option label="有效" :value="1"></el-option>
           <el-option label="无效" :value="2"></el-option>
         </el-select>
@@ -40,6 +40,7 @@
       <el-form-item label="结束时间" prop="end_time">
         <el-date-picker
           v-model="formData.end_time"
+          value-format="YYYY-MM-DD"
           placeholder="请选择结束时间"
         ></el-date-picker>
       </el-form-item>
@@ -78,7 +79,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { editCourse } from '@/api/training'
+import { editCourse ,getTrainingDetail} from '@/api/training'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 import MEditor from '@/components/MEditor/index.vue'
@@ -132,13 +133,25 @@ const rules = {
   status: [{ required: true, message: '请选择状态', trigger: 'blur' }],
 }
 
-const show = row => {
-  formData.value.id = row.id
+// const show = row => {
+//   formData.value.id = row.id
+//   Object.keys(formData.value).forEach(key => {
+//     formData.value[key] = row[key]
+//   })
+//   visible.value = true
+// }
+
+const show = async row => {
+  console.log(row,"rowrow")
+  const { data } = await getTrainingDetail(row.id)
+  formData.value = {...data}
   Object.keys(formData.value).forEach(key => {
-    formData.value[key] = row[key]
+    formData.value[key] = data[key]
   })
   visible.value = true
 }
+
+
 
 const hide = () => {
   visible.value = false

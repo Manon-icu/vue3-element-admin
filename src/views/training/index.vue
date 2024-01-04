@@ -43,21 +43,16 @@
       <template #default="{ row }" v-html="row.abstract"></template>
     </el-table-column>
     <el-table-column prop="status_desc" label="状态"></el-table-column>
-    <el-table-column prop="status" label="状态">
+    <el-table-column prop="operation" label="操作">
       <template #default="{ row }">
-        <el-popconfirm
-          :title="`Are you sure to ${row.status ? 'disable' : 'enable'} this?`"
-          @confirm="onSwitchStatus(row)"
-        >
-          <template #reference>
-            <el-button>{{ row.status === 1 ? '禁用' : '启用' }}</el-button>
-          </template>
-        </el-popconfirm>
-      </template>
-    </el-table-column>
-    <el-table-column prop="operation" label="编辑">
-      <template #default="{ row }">
-        <el-button type="primary" @click="onEdit(row)">编辑</el-button>
+              <el-switch
+              style="margin-right: 10px"
+              v-model="row.status"
+              :active-value="1"
+              :inactive-value="2"
+              @change="onSwitchStatus(row)"
+        ></el-switch>
+        <el-link type="primary" @click="onEdit(row)">编辑</el-link>
       </template>
     </el-table-column>
   </el-table>
