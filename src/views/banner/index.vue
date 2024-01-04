@@ -13,21 +13,16 @@
     <el-table-column prop="updated_at" label="更新时间"></el-table-column>
     <el-table-column prop="module_type" label="类型"></el-table-column>
     <el-table-column prop="module_type_desc" label="类型说明"></el-table-column>
-    <el-table-column prop="status" label="状态">
+    <el-table-column prop="operation" label="操作">
       <template #default="{ row }">
-        <el-popconfirm
-          :title="`Are you sure to ${row.status ? 'disable' : 'enable'} this?`"
-          @confirm="onSwitchStatus(row)"
-        >
-          <template #reference>
-            <el-button>{{ row.status === 1 ? '禁用' : '启用' }}</el-button>
-          </template>
-        </el-popconfirm>
-      </template>
-    </el-table-column>
-    <el-table-column prop="operation" label="编辑">
-      <template #default="{ row }">
-        <el-button type="primary" @click="onEdit(row)">编辑</el-button>
+          <el-switch
+              style="margin-right: 10px"
+              v-model="row.status"
+              :active-value="1"
+              :inactive-value="2"
+              @change="onSwitchStatus(row)"
+        ></el-switch>
+        <el-link type="primary" @click="onEdit(row)">编辑</el-link>
       </template>
     </el-table-column>
   </el-table>
@@ -72,6 +67,7 @@ const onSearch = async () => {
 
 const onSwitchStatus = async row => {
   await toggleBannerStatus({ id: row.id })
+  await onSearch()
 }
 
 const onEdit = row => {
