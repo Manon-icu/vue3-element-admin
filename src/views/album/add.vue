@@ -5,7 +5,7 @@
           <el-input v-model="formData.title"></el-input>
         </el-form-item>
         <el-form-item prop="occurrence_time" label="发生时间:">
-        <el-date-picker v-model="formData.occurrence_time"  value-format="YYYY-MM-DD hh:mm:ss" type="datetime" placeholder="选择发生时间"></el-date-picker>
+        <el-date-picker v-model="formData.occurrence_time"  value-format="YYYY-MM-DD"  placeholder="选择发生时间"></el-date-picker>
       </el-form-item>
         <el-form-item prop="cover_img_url" label="封面:">
           <Upload v-model="formData.cover_img_url" />
@@ -25,7 +25,7 @@
   
   <script setup>
   import { ref, reactive } from 'vue'
-  import { addPhotoAlbums,editPhotoAlbums } from '@/api/album'
+  import { addPhotoAlbums,editPhotoAlbums ,detailPhotoAlbums} from '@/api/album'
   import { ElMessage } from 'element-plus'
   import Upload from '@/components/Upload/index.vue'
   
@@ -39,7 +39,7 @@
     title: '添加',
   })
   const fieldForm = ref();
-  const formData = reactive({
+  const formData = ref({
     id:'-1',
     title: '',
     cover_img_url: '',
@@ -58,15 +58,20 @@
   ],
   abstract: [{ required: true, message: '请输入摘要', trigger: 'blur' }],
 }
-  const show = row => {
-  visible.value = true
+
+const show = async row => {
+  console.log(row,"asdad")
   staticData.title = row.id!=-1?'编辑':'添加'
-    formData.id =row.id!=-1? row.id:'-1'
-    formData.title =row.id!=-1? row.title:''
-    formData.cover_img_url = row.id!=-1? row.cover_img_url:''
-    formData.occurrence_time = row.id!=-1? row.occurrence_time:''
-    formData.abstract =row.id!=-1? row.abstract:''
+  if(row.id!=-1) {
+    const { data } = await detailPhotoAlbums(row.id)
+  formData.value = {...data}
+  Object.keys(formData.value).forEach(key => {
+    formData.value[key] = data[key]
+  })
+  }
+  visible.value = true
 }
+
   
   const hide = () => {
     visible.value = false
@@ -76,21 +81,21 @@
     fieldForm.value.validate(async valid =>{
         if (valid) {
             loading.value = true
-        if(formData.id!=-1){
-            await editPhotoAlbums(formData.id, formData)
+        if(formData.value.id!=-1){
+            await editPhotoAlbums(formData.value.id, formData.value)
         }else{
-            await addPhotoAlbums(formData)
+            await addPhotoAlbums(formData.value)
         }
       await props.cb?.()
       hide()
-      ElMessage.success(formData.id==-1?'添加成功':'编辑成功')
+      ElMessage.success(formData.value.id==-1?'添加成功':'编辑成功')
       loading.value = false
         }
     })
   
   }
   const onSuccess = val => {
-    formData.avatar_url = val.data.url
+    formData.value.avatar_url = val.data.url
   }
   
   defineExpose({

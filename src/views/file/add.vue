@@ -16,7 +16,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { addPhotoAlbumsFiles, editPhotoAlbumsFiles } from '@/api/file'
+import { addPhotoAlbumsFiles, editPhotoAlbumsFiles,detailPhotoAlbumsFile } from '@/api/file'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 
@@ -41,14 +41,36 @@ const loading = ref(false)
 const rules = {
   file_url: [{ required: true, message: '请选择文件', trigger: 'blur' }],
 }
-const show = row => {
-  visible.value = true
+
+
+// const show = row => {
+//   visible.value = true
+//   staticData.title = row.isAdd == 1 ? '添加' : '编辑'
+//   formData.value.file_url = row.isAdd == 1 ? '' : row.file_url
+//   formData.value.photo_album_id = row.photo_album_id ? row.photo_album_id : ''
+//   if (row.isAdd == 1) {
+//   }
+// }
+
+
+const show = async row => {
+  console.log(row,"asdad")
   staticData.title = row.isAdd == 1 ? '添加' : '编辑'
-  formData.value.file_url = row.isAdd == 1 ? '' : row.file_url
   formData.value.photo_album_id = row.photo_album_id ? row.photo_album_id : ''
-  if (row.isAdd == 1) {
+  if(row.isAdd!=1) {
+    const { data } = await detailPhotoAlbumsFile(row.id)
+  formData.value = {...data}
+  Object.keys(formData.value).forEach(key => {
+    formData.value[key] = data[key]
+  })
   }
+  visible.value = true
 }
+
+
+
+
+
 
 const resetForm = () => {
   fieldForm.value.resetFields()

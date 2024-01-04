@@ -34,7 +34,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { editTeamMember } from '@/api/about'
+import { editTeamMember,getTeamMember } from '@/api/about'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 
@@ -64,9 +64,17 @@ const rules = {
   sort_index: [{ required: true, message: '请输入排序', trigger: 'blur' }],
 }
 
-const show = row => {
+const show = async row => {
+  console.log(row,"rowrow")
+  const { data } = await getTeamMember(row.id)
+  data.group_type = data.group_type.toString()
+  formData.value = {...data}
+  console.log(formData.value,"formDataformData")
+  Object.keys(formData.value).forEach(key => {
+    formData.value[key] = data[key]
+  })
   visible.value = true
-  formData.value = row
+  // formData.value = row
 }
 
 const hide = () => {

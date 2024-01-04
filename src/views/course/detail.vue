@@ -14,18 +14,22 @@
         <el-form-item  label="图片1:">
           <div style="width: 100px;height:100px">
             <img
+            v-if="formData.img_url1"
                     style="width:100%;height:100%;cursor:pointer;"
                     :src="formData.img_url1"
                   />
+                  <span v-else>暂无</span>
           </div>
         
         </el-form-item>
         <el-form-item  label="图片2:">
-          <div style="width: 100px;height:100px">
+          <div style="width: 100px;height:100px" >
             <img
+              v-if="formData.img_url2"
                     style="width:100%;height:100%;cursor:pointer;"
                     :src="formData.img_url2"
                   />
+                  <span v-else>暂无</span>
           </div>
         
         </el-form-item>

@@ -25,7 +25,7 @@
   
   <script setup>
   import { ref, reactive } from 'vue'
-  import { addHistories,editHistories } from '@/api/course'
+  import { addHistories,editHistories,detailHistories } from '@/api/course'
   import { ElMessage } from 'element-plus'
   import Upload from '@/components/Upload/index.vue'
   
@@ -39,7 +39,7 @@
     title: '添加',
   })
   const fieldForm = ref();
-  const formData = reactive({
+  const formData = ref({
     id:'-1',
     img_url1: '',
     img_url2:'',
@@ -60,15 +60,27 @@
   ],
   content: [{ required: true, message: '请输入发生内容', trigger: 'blur' }],
 }
-  const show = row => {
-  visible.value = true
+  
+
+const show = async row => {
+  console.log(row,"asdad")
   staticData.title = row.id!=-1?'编辑':'添加'
-    formData.id =row.id!=-1? row.id:'-1'
-    formData.img_url1 = row.id!=-1? row.img_url1:''
-    formData.img_url2 = row.id!=-1? row.img_url2:''
-    formData.occurrence_time = row.id!=-1? row.occurrence_time:''
-    formData.content =row.id!=-1? row.content:''
+  if(row.id!=-1) {
+    const { data } = await detailHistories(row.id)
+  formData.value = {...data}
+  Object.keys(formData.value).forEach(key => {
+    formData.value[key] = data[key]
+  })
+  }else{
+    formData.value = {
+      id:-1
+    }
+  }
+  visible.value = true
 }
+
+
+
   
   const hide = () => {
     visible.value = false
@@ -77,23 +89,24 @@
   const onConfirm = async () => {
     fieldForm.value.validate(async valid =>{
         if (valid) {
-          formData.occurrence_time =formData.occurrence_time? formData.occurrence_time+'-01':''
+          console.log(formData.value,"formDataformDataformData")
+          formData.value.occurrence_time =formData.value.id==-1?formData.value.occurrence_time? formData.value.occurrence_time+'-01':'':formData.value.occurrence_time
             loading.value = true
-        if(formData.id!=-1){
-            await editHistories(formData.id, formData)
+        if(formData.value.id!=-1){
+            await editHistories(formData.value.id, formData.value)
         }else{
-            await addHistories(formData)
+            await addHistories(formData.value)
         }
       await props.cb?.()
       hide()
-      ElMessage.success(formData.id==-1?'添加成功':'编辑成功')
+      ElMessage.success(formData.value.id==-1?'添加成功':'编辑成功')
       loading.value = false
         }
     })
   
   }
   const onSuccess = val => {
-    formData.avatar_url = val.data.url
+    formData.value.avatar_url = val.data.url
   }
   
   defineExpose({
