@@ -112,7 +112,10 @@ const onConfirm = async () => {
           cover_img_url: fileList,
         })
       } else {
-        await addPhotoAlbums(formData.value)
+        await addPhotoAlbums(formData.value.id, {
+          ...rest,
+          cover_img_url: fileList,
+        })
       }
       await props.cb?.()
       hide()
