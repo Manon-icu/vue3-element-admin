@@ -2,11 +2,11 @@ import request from '@/utils/request'
 
 // 查询 相册 列表
 export const getPhotoAlbumsList = params => {
-    return request({
-      url: '/admin/photo-albums',
-      params,
-    })
-  }
+  return request({
+    url: '/admin/photo-albums',
+    params,
+  })
+}
 
 // 添加 相册
 export const addPhotoAlbums = data => {
@@ -17,9 +17,8 @@ export const addPhotoAlbums = data => {
   })
 }
 
-
 // 相册详情
-export const detailPhotoAlbums = (id) => {
+export const detailPhotoAlbums = id => {
   return request({
     url: `admin/photo-albums/${id}`,
     method: 'get',
@@ -27,15 +26,15 @@ export const detailPhotoAlbums = (id) => {
 }
 
 // 编辑 相册
-  export const editPhotoAlbums = (id, data) => {
-    return request({
-      url: `/admin/photo-albums/${id}`,
-      method: 'put',
-      data,
-    })
-  }
+export const editPhotoAlbums = (id, data) => {
+  return request({
+    url: `/admin/photo-albums/${id}`,
+    method: 'put',
+    data,
+  })
+}
 
- // 相册状态反转
+// 相册状态反转
 export const reverseStatusPhoto = data => {
   return request({
     url: '/admin/photo-album/reverse-status',
@@ -44,3 +43,11 @@ export const reverseStatusPhoto = data => {
   })
 }
 
+// 批量添加相册文件
+export const batchAddPhoto = data => {
+  return request({
+    url: '/admin/photo-album-file/batch-add',
+    data,
+    method: 'post',
+  })
+}
