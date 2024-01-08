@@ -5,17 +5,20 @@
     </el-form-item>
     <el-form-item label="类型">
       <el-select v-model="formData.category">
-        <el-option label="无" value="0"></el-option>
-        <el-option label="新课上线" value="1"></el-option>
-        <el-option label="正在报名" value="2"></el-option>
-        <el-option label="精选课程" value="3"></el-option>
+        <el-option
+          :label="item.label"
+          :value="item.value"
+          v-for="item in CategoryOptions"
+        ></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="状态">
-      <el-select v-model="formData.category">
-        <el-option label="全部" value="-1"></el-option>
-        <el-option label="有效" value="1"></el-option>
-        <el-option label="无效" value="2"></el-option>
+      <el-select v-model="formData.status">
+        <el-option
+          :label="item.label"
+          :value="item.value"
+          v-for="item in StatusOptions"
+        ></el-option>
       </el-select>
     </el-form-item>
     <el-form-item>
@@ -42,15 +45,16 @@
     <el-table-column prop="abstract" label="摘要">
       <template #default="{ row }" v-html="row.abstract"></template>
     </el-table-column>
+    <el-table-column prop="category_desc" label="类型"></el-table-column>
     <el-table-column prop="status_desc" label="状态"></el-table-column>
     <el-table-column prop="operation" label="操作">
       <template #default="{ row }">
-              <el-switch
-              style="margin-right: 10px"
-              v-model="row.status"
-              :active-value="1"
-              :inactive-value="2"
-              @change="onSwitchStatus(row)"
+        <el-switch
+          style="margin-right: 10px"
+          v-model="row.status"
+          :active-value="1"
+          :inactive-value="2"
+          @change="onSwitchStatus(row)"
         ></el-switch>
         <el-link type="primary" @click="onEdit(row)">编辑</el-link>
       </template>
@@ -77,13 +81,34 @@ import { getTrainingList, toggleCourseStatus } from '@/api/training'
 import Edit from './edit.vue'
 import Add from './add.vue'
 
+const CategoryEnums = {
+  0: '无',
+  1: '新课上线',
+  2: '正在报名',
+  3: '精选课程',
+}
+const StatusEnums = {
+  1: '有效',
+  2: '无效',
+}
+
+const CategoryOptions = Object.entries(CategoryEnums).map(([value, label]) => ({
+  value,
+  label,
+}))
+
+const StatusOptions = Object.entries(StatusEnums).map(([value, label]) => ({
+  value,
+  label,
+}))
+
 const loading = ref(false)
 const editRef = ref(null)
 const addRef = ref(null)
 const formData = reactive({
   category: '',
   title: '',
-  status: '',
+  status: '1',
 })
 const pagination = reactive({
   page: 1,
