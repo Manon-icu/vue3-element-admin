@@ -88,6 +88,7 @@ const CategoryEnums = {
   3: '精选课程',
 }
 const StatusEnums = {
+  0:'全部',
   1: '有效',
   2: '无效',
 }
