@@ -88,7 +88,7 @@ const detailRef = ref(null)
     total: 0,
   })
   const parameter = reactive({
-    status: '-1',
+    status: '1',
     title: '',
   })
 
