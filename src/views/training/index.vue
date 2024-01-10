@@ -28,7 +28,7 @@
   </el-form>
   <el-table bordered :data="tableData">
     <el-table-column prop="title" label="课程标题"></el-table-column>
-    <el-table-column prop="created_at" label="创建时间"></el-table-column>
+    <el-table-column prop="updated_at" label="创建时间"></el-table-column>
     <el-table-column prop="cover_img_url" label="封面图">
       <template #default="{ row }">
         <el-image
@@ -88,7 +88,7 @@ const CategoryEnums = {
   3: '精选课程',
 }
 const StatusEnums = {
-  0:'全部',
+  0: '全部',
   1: '有效',
   2: '无效',
 }
