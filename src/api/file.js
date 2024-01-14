@@ -17,7 +17,6 @@ export const addPhotoAlbumsFiles = data => {
   })
 }
 
-
 // 编辑 相册文件
 export const editPhotoAlbumsFiles = (id, data) => {
   return request({
@@ -28,15 +27,14 @@ export const editPhotoAlbumsFiles = (id, data) => {
 }
 
 // 相册文件详情
-export const detailPhotoAlbumsFile = (id) => {
+export const detailPhotoAlbumsFile = id => {
   return request({
     url: `/admin/photo-album-files/${id}`,
     method: 'get',
   })
 }
 
-
- // 相册文件状态反转
+// 相册文件状态反转
 export const reverseFileStatusPhoto = data => {
   return request({
     url: '/admin/photo-album-file/reverse-status',
@@ -45,3 +43,20 @@ export const reverseFileStatusPhoto = data => {
   })
 }
 
+// 批量添加 相册文件
+export const batchAddPhotoAlbumsFiles = data => {
+  return request({
+    url: '/admin/photo-album-file/batch-add',
+    data,
+    method: 'post',
+  })
+}
+
+// 批量更新 相册文件
+export const batchUpdateAlbumsFiles = data => {
+  return request({
+    url: `/admin/photo-album-file/batch-update`,
+    method: 'post',
+    data,
+  })
+}

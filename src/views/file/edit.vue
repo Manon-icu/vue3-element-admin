@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" title="添加">
+  <el-dialog v-model="visible" title="编辑">
     <el-form label-width="120" :model="formData" :rules="rules" ref="fieldForm">
       <el-form-item prop="file_url" label="文件:">
         <el-upload
@@ -26,7 +26,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { batchAddPhotoAlbumsFiles } from '@/api/file'
+import { detailPhotoAlbumsFile, editPhotoAlbumsFiles } from '@/api/file'
 import { ElMessage } from 'element-plus'
 
 const props = defineProps({
@@ -37,7 +37,6 @@ const props = defineProps({
 })
 const uploadRef = ref(null)
 const fileList = ref([])
-
 const fieldForm = ref(null) // 引用表单实例
 const formData = ref({
   photo_album_id: '',
@@ -49,8 +48,15 @@ const rules = {
   file_url: [{ required: true, message: '请选择文件', trigger: 'blur' }],
 }
 
-const show = async id => {
-  formData.value.photo_album_id = id ?? ''
+const show = async row => {
+  formData.value.photo_album_id = row.photo_album_id ? row.photo_album_id : ''
+  if (row.isAdd != 1) {
+    const { data } = await detailPhotoAlbumsFile(row.id)
+    formData.value = { ...data }
+    Object.keys(formData.value).forEach(key => {
+      formData.value[key] = data[key]
+    })
+  }
   visible.value = true
 }
 
@@ -65,15 +71,15 @@ const onConfirm = async () => {
   fieldForm.value.validate(async valid => {
     if (valid) {
       loading.value = true
-
-      await batchAddPhotoAlbumsFiles({
-        photo_album_id: formData.value.photo_album_id,
-        json_data: formData.value.file_url,
+      const { photo_album_id, file_url } = formData.value
+      await editPhotoAlbumsFiles(photo_album_id, {
+        file_url: file_url,
+        file_type: /\.(jpg|png|gif)$/i.test(file_url) ? 1 : 2,
       })
 
       await props.cb?.()
       hide()
-      ElMessage.success('添加成功')
+      ElMessage.success('编辑成功')
       loading.value = false
       const resetFormData = {
         file_url: '',
@@ -84,12 +90,8 @@ const onConfirm = async () => {
   })
 }
 
-const onSuccess = (response, uploadFile, uploadFiles) => {
-  const jsonData = uploadFiles.map(item => ({
-    file_url: item.response.data.file_url,
-    file_type: /\.(jpg|png|gif)$/i.test(item.response.data.file_url) ? 1 : 2,
-  }))
-  formData.value.file_url = JSON.stringify(jsonData)
+const onSuccess = (_, uploadFile) => {
+  formData.value.file_url = uploadFile.response.data.file_url
 }
 
 defineExpose({

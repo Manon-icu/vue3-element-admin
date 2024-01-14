@@ -12,17 +12,7 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="cover_img_url" label="封面:">
-        <el-upload
-          v-model:file-list="fileList"
-          ref="uploadRef"
-          action="http://api.montessori-hz.com/admin/common/upload"
-          accept="file/*"
-          list-type="picture"
-          :multiple="true"
-          :on-success="onSuccess"
-        >
-          <el-button type="primary">Click to upload</el-button>
-        </el-upload>
+        <Upload v-model="formData.cover_img_url" />
       </el-form-item>
       <el-form-item prop="abstract" label="摘要:">
         <el-input type="textarea" v-model="formData.abstract"></el-input>
@@ -39,13 +29,9 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import {
-  addPhotoAlbums,
-  editPhotoAlbums,
-  detailPhotoAlbums,
-  batchAddPhoto,
-} from '@/api/album'
+import { addPhotoAlbums, editPhotoAlbums, detailPhotoAlbums } from '@/api/album'
 import { ElMessage } from 'element-plus'
+import Upload from '@/components/Upload/index.vue'
 
 const props = defineProps({
   cb: {
@@ -60,15 +46,13 @@ const fieldForm = ref()
 const formData = ref({
   id: '-1',
   title: '',
-  cover_img_url: [],
+  cover_img_url: '',
   occurrence_time: '',
   abstract: '',
 })
-const uploadRef = ref(null)
 const visible = ref(false)
 const loading = ref(false)
-const fileList = ref([])
-console.log('🚀 ~ file: add.vue:68 ~ fileList:', fileList)
+
 const rules = {
   title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
   occurrence_time: [
@@ -79,7 +63,6 @@ const rules = {
 }
 
 const show = async row => {
-  console.log('🚀 ~ file: add.vue:77 ~ show ~ row:', row)
   staticData.title = row.id != -1 ? '编辑' : '添加'
   if (row.id != -1) {
     const { data } = await detailPhotoAlbums(row.id)
@@ -100,22 +83,11 @@ const onConfirm = async () => {
     if (valid) {
       loading.value = true
       const { cover_img_url, ...rest } = formData.value
-      const { data } = await batchAddPhoto({
-        photo_album_id: formData.value.id,
-        json_data: cover_img_url,
-      })
-      console.log('🚀 ~ file: add.vue:102 ~ onConfirm ~ data:', data)
 
       if (formData.value.id != -1) {
-        await editPhotoAlbums(formData.value.id, {
-          ...rest,
-          cover_img_url: fileList,
-        })
+        await editPhotoAlbums(formData.value.id, formData.value)
       } else {
-        await addPhotoAlbums(formData.value.id, {
-          ...rest,
-          cover_img_url: fileList,
-        })
+        await addPhotoAlbums(formData.value)
       }
       await props.cb?.()
       hide()
@@ -123,14 +95,6 @@ const onConfirm = async () => {
       loading.value = false
     }
   })
-}
-
-const onSuccess = (response, uploadFile, uploadFiles) => {
-  const jsonData = uploadFiles.map(item => ({
-    file_url: item.response.data.file_url,
-    file_type: 1,
-  }))
-  formData.value.cover_img_url = jsonData
 }
 
 defineExpose({
