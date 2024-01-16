@@ -10,6 +10,8 @@
           <el-option label="新课上线" :value="1"></el-option>
           <el-option label="正在报名" :value="2"></el-option>
           <el-option label="精选课程" :value="3"></el-option>
+          <el-option label="首页显示" :value="4"></el-option>
+          <el-option label="允许排序" :value="5"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="状态" prop="status">
@@ -37,11 +39,11 @@
           <el-option label="年" :value="4"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="结束时间" prop="end_time">
+      <el-form-item label="报名结束时间" prop="end_time">
         <el-date-picker
           v-model="formData.end_time"
           value-format="YYYY-MM-DD"
-          placeholder="请选择结束时间"
+          placeholder="请选择报名结束时间"
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="培训老师" prop="team_members_ids">
