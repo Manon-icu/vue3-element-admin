@@ -67,13 +67,36 @@
       <el-form-item prop="description" label="课程描述:">
         <MEditor v-model="formData.description" />
       </el-form-item>
-      <el-form-item label="培训信息" prop="training_information_type">
+      <el-form-item prop="timetable_img_url" label="课程时间表:">
+        <Upload v-model="formData.timetable_img_url" />
+      </el-form-item>
+      <!-- <el-form-item label="培训信息" prop="training_information_type">
         <el-select v-model="formData.training_information_type">
-          <!-- <el-option label="无" value="0"></el-option> -->
           <el-option label="Training infor-A" :value="1"></el-option>
           <el-option label="Training infor-B" :value="2"></el-option>
           <el-option label="Training infor-C" :value="3"></el-option>
         </el-select>
+      </el-form-item> -->
+      <el-form-item prop="course_time" label="课程时间:">
+        <MEditor v-model="formData.course_time" />
+      </el-form-item>
+      <el-form-item prop="notification" label="特别说明:">
+        <MEditor v-model="formData.notification" />
+      </el-form-item>
+      <el-form-item prop="tution_fee" label="培训费用:">
+        <MEditor v-model="formData.tution_fee" />
+      </el-form-item>
+      <el-form-item prop="language" label="授课语言:">
+        <MEditor v-model="formData.language" />
+      </el-form-item>
+      <el-form-item prop="application_requirements" label="申请要求:">
+        <MEditor v-model="formData.application_requirements" />
+      </el-form-item>
+      <el-form-item prop="application" label="申请方式:">
+        <MEditor v-model="formData.application" />
+      </el-form-item>
+      <el-form-item prop="application_process" label="申请流程:">
+        <MEditor v-model="formData.application_process" />
       </el-form-item>
       <el-form-item>
         <el-button type="default" @click="hide">取消</el-button>
@@ -107,6 +130,14 @@ const formData = ref({
   preface: '',
   description: '',
   // content: '',
+  timetable_img_url: '',
+  course_time: '',
+  notification: '',
+  tution_fee: '',
+  language: '',
+  application_requirements: '',
+  application: '',
+  application_process: '',
   duration_num: 4,
   duration_unit: 2,
   end_time: '2021-09-30 00:00:00',
