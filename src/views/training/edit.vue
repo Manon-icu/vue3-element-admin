@@ -56,8 +56,14 @@
       <el-form-item prop="abstract" label="简介:">
         <el-input type="textarea" v-model="formData.abstract"></el-input>
       </el-form-item>
-      <el-form-item prop="content" label="内容:">
+      <!-- <el-form-item prop="content" label="内容:">
         <MEditor v-model="formData.content" />
+      </el-form-item> -->
+      <el-form-item prop="preface" label="写在前面:">
+        <MEditor v-model="formData.preface" />
+      </el-form-item>
+      <el-form-item prop="description" label="课程描述:">
+        <MEditor v-model="formData.description" />
       </el-form-item>
       <el-form-item label="培训信息" prop="training_information_type">
         <el-select v-model="formData.training_information_type">
@@ -98,6 +104,8 @@ const formData = ref({
   cover_img_url: '',
   abstract: '',
   content: '',
+  preface: '',
+  description: '',
   duration_num: 4,
   duration_unit: 2,
   end_time: '2021-09-30 00:00:00',
@@ -112,7 +120,9 @@ const rules = {
   category: [{ required: true, message: '请选择类型', trigger: 'blur' }],
   cover_img_url: [{ required: true, message: '请上传封面图', trigger: 'blur' }],
   abstract: [{ required: true, message: '请输入摘要', trigger: 'blur' }],
-  content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+  // content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+  preface: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+  description: [{ required: true, message: '请输入内容', trigger: 'blur' }],
   duration_num: [
     { required: true, message: '请输入课程时长', trigger: 'blur' },
   ],
