@@ -19,7 +19,7 @@
           <el-option label="无效" :value="2"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="课程时长数字" prop="duration_num">
+      <!-- <el-form-item label="课程时长数字" prop="duration_num">
         <el-input
           type="number"
           v-model="formData.duration_num"
@@ -36,7 +36,7 @@
           <el-option label="月" :value="3"></el-option>
           <el-option label="年" :value="4"></el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="结束时间" prop="end_time">
         <el-date-picker
           v-model="formData.end_time"
@@ -109,7 +109,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { editCourse ,getTrainingDetail} from '@/api/training'
+import { editCourse, getTrainingDetail } from '@/api/training'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 import MEditor from '@/components/MEditor/index.vue'
@@ -155,12 +155,12 @@ const rules = {
   // content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
   preface: [{ required: true, message: '请输入内容', trigger: 'blur' }],
   description: [{ required: true, message: '请输入内容', trigger: 'blur' }],
-  duration_num: [
-    { required: true, message: '请输入课程时长', trigger: 'blur' },
-  ],
-  duration_unit: [
-    { required: true, message: '请选择课程时长单位', trigger: 'blur' },
-  ],
+  // duration_num: [
+  //   { required: true, message: '请输入课程时长', trigger: 'blur' },
+  // ],
+  // duration_unit: [
+  //   { required: true, message: '请选择课程时长单位', trigger: 'blur' },
+  // ],
   end_time: [{ required: true, message: '请选择结束时间', trigger: 'blur' }],
   team_members_ids: [
     {
@@ -184,16 +184,14 @@ const rules = {
 // }
 
 const show = async row => {
-  console.log(row,"rowrow")
+  console.log(row, 'rowrow')
   const { data } = await getTrainingDetail(row.id)
-  formData.value = {...data}
+  formData.value = { ...data }
   Object.keys(formData.value).forEach(key => {
     formData.value[key] = data[key]
   })
   visible.value = true
 }
-
-
 
 const hide = () => {
   visible.value = false
