@@ -4,14 +4,20 @@
       <el-form-item label="课程标题" prop="title">
         <el-input v-model="formData.title" placeholder="请输入标题"></el-input>
       </el-form-item>
+      <el-form-item label="显示在首页" prop="is_home_desc">
+        <el-switch v-model="formData.is_home_desc"
+        inline-prompt
+        active-text="是"
+        inactive-text="否" />
+      </el-form-item>
+      <el-form-item label="首页排序值" prop="home_index">
+        <el-input-number v-model="formData.home_index" :min="1" :max="20" />
+      </el-form-item>
       <el-form-item label="类型" prop="category">
         <el-select v-model="formData.category">
-          <!-- <el-option label="无" :value="0"></el-option> -->
+          <el-option label="无" :value="0"></el-option>
           <el-option label="新课上线" :value="1"></el-option>
-          <el-option label="正在报名" :value="2"></el-option>
           <el-option label="精选课程" :value="3"></el-option>
-          <el-option label="首页显示" :value="4"></el-option>
-          <el-option label="允许排序" :value="5"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="状态" prop="status">
@@ -122,9 +128,12 @@ const props = defineProps({
   },
 })
 
-const formData = ref({
+const initFormData = {
   title: '',
-  category: '',
+  is_home: 0,
+  home_index: 1,
+  is_home_desc: '否',
+  category: 0,
   cover_img_url: '',
   abstract: '',
   preface: '',
@@ -144,6 +153,10 @@ const formData = ref({
   team_members_ids: '1,2,3',
   training_information_type: 1,
   status: 1,
+}
+
+const formData = ref({
+  ...initFormData
 })
 const visible = ref(false)
 const loading = ref(false)
@@ -177,7 +190,7 @@ const rules = {
 
 const show = () => {
   visible.value = true
-  formData.value = {}
+  formData.value = initFormData
 }
 
 const hide = () => {
@@ -188,10 +201,21 @@ const hide = () => {
 const onConfirm = async () => {
   try {
     loading.value = true
-    await addCourse(formData.value)
+    if(formData.value.is_home_desc) {
+      formData.value.is_home = 1
+      formData.value.is_home_desc = '是'
+    } else {
+      formData.value.is_home = 0
+      formData.value.is_home_desc = '否'
+    }
+    const {code}= await addCourse(formData.value)
     await props.cb?.()
     hide()
-    ElMessage.success('编辑成功')
+    if(code === 0) {
+      ElMessage.success('添加成功！')
+    } else {
+      ElMessage.error('添加失败！')
+    }
   } catch (error) {
     console.log('🚀 ~ file: edit.vue:61 ~ onConfirm ~ error:', error)
   } finally {

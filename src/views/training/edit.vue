@@ -4,6 +4,15 @@
       <el-form-item label="课程标题" prop="title">
         <el-input v-model="formData.title" placeholder="请输入标题"></el-input>
       </el-form-item>
+      <el-form-item label="显示在首页" prop="is_home_desc">
+        <el-switch v-model="formData.is_home_desc"
+        inline-prompt
+        active-text="是"
+        inactive-text="否" />
+      </el-form-item>
+      <el-form-item label="首页排序值" prop="home_index">
+        <el-input-number v-model="formData.home_index" :min="1" :max="20" />
+      </el-form-item>
       <el-form-item label="类型" prop="category">
         <el-select v-model="formData.category">
           <el-option label="无" :value="0"></el-option>
@@ -124,6 +133,9 @@ const props = defineProps({
 const formData = ref({
   id: '',
   title: '',
+  is_home: 0,
+  home_index: 1,
+  is_home_desc: '否',
   category: '',
   cover_img_url: '',
   abstract: '',
@@ -201,10 +213,14 @@ const hide = () => {
 const onConfirm = async () => {
   try {
     loading.value = true
-    await editCourse(formData.value.id, formData.value)
+    const {code} = await editCourse(formData.value.id, formData.value)
     await props.cb?.()
     hide()
-    ElMessage.success('编辑成功')
+    if(code === 0) {
+      ElMessage.success('编辑成功')
+    } else {
+      ElMessage.error('编辑失败！')
+    }
   } catch (error) {
     console.log('🚀 ~ file: edit.vue:61 ~ onConfirm ~ error:', error)
   } finally {

@@ -3,7 +3,7 @@
     <el-form-item label="课程标题">
       <el-input v-model="formData.title" placeholder="请输入标题"></el-input>
     </el-form-item>
-    <el-form-item label="类型">
+    <el-form-item label="类型" style="width: 200px">
       <el-select v-model="formData.category">
         <el-option
           :label="item.label"
@@ -12,12 +12,21 @@
         ></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="状态">
+    <el-form-item label="状态" style="width: 200px">
       <el-select v-model="formData.status">
         <el-option
           :label="item.label"
           :value="item.value"
           v-for="item in StatusOptions"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="首页显示" style="width: 200px">
+      <el-select v-model="formData.is_home">
+        <el-option
+          :label="item.label"
+          :value="item.value"
+          v-for="item in IsHomeOptions"
         ></el-option>
       </el-select>
     </el-form-item>
@@ -28,6 +37,13 @@
   </el-form>
   <el-table bordered :data="tableData">
     <el-table-column prop="title" label="课程标题"></el-table-column>
+    <el-table-column prop="is_home_desc" label="首页显示">
+      <template #default="{ row }">
+        <el-text v-html="row.is_home_desc" />
+        <el-text v-show="row.is_home === 1" v-html="', 排序值：'+row.home_index" />
+      </template>
+    </el-table-column>
+    <el-table-column prop="home_index" label="首页排序值"></el-table-column>
     <el-table-column prop="updated_at" label="创建时间"></el-table-column>
     <el-table-column prop="cover_img_url" label="封面图">
       <template #default="{ row }">
@@ -84,13 +100,17 @@ import Add from './add.vue'
 const CategoryEnums = {
   0: '无',
   1: '新课上线',
-  2: '正在报名',
+  //2: '正在报名',
   3: '精选课程',
 }
 const StatusEnums = {
   0: '全部',
   1: '有效',
   2: '无效',
+}
+const IsHomeEnums = {
+  0: '否',
+  1: '是',
 }
 
 const CategoryOptions = Object.entries(CategoryEnums).map(([value, label]) => ({
@@ -103,13 +123,19 @@ const StatusOptions = Object.entries(StatusEnums).map(([value, label]) => ({
   label,
 }))
 
+const IsHomeOptions = Object.entries(IsHomeEnums).map(([value, label]) => ({
+  value,
+  label,
+}))
+
 const loading = ref(false)
 const editRef = ref(null)
 const addRef = ref(null)
 const formData = reactive({
-  category: '',
+  category: '0',
   title: '',
   status: '1',
+  is_home: '0',
 })
 const pagination = reactive({
   page: 1,
