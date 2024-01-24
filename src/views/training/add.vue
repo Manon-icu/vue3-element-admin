@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" title="编辑" width="85%">
+  <el-dialog v-model="visible" title="添加课程" width="85%" :before-close="hide">
     <el-form label-width="120" :model="formData" :rules="rules">
       <el-form-item label="课程标题" prop="title">
         <el-input v-model="formData.title" placeholder="请输入标题"></el-input>
@@ -7,6 +7,8 @@
       <el-form-item label="显示在首页" prop="is_home_desc">
         <el-switch v-model="formData.is_home_desc"
         inline-prompt
+        active-value="是"
+        inactive-value="否"
         active-text="是"
         inactive-text="否" />
       </el-form-item>
@@ -20,13 +22,15 @@
           <el-option label="精选课程" :value="3"></el-option>
         </el-select>
       </el-form-item>
+      <!-- 
       <el-form-item label="状态" prop="status">
         <el-select v-model="formData.status">
-          <!-- <el-option label="全部" :value="-1"></el-option> -->
+          <el-option label="全部" :value="-1"></el-option>
           <el-option label="有效" :value="1"></el-option>
-          <!-- <el-option label="无效" :value="2"></el-option> -->
+          <el-option label="无效" :value="2"></el-option>
         </el-select>
       </el-form-item>
+    -->
       <!-- <el-form-item label="课程时长数字" prop="duration_num">
         <el-input
           type="number"
@@ -53,10 +57,22 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="培训老师" prop="team_members_ids">
-        <el-input
+        <el-select 
+          multiple
+          placeholder="请选择培训老师团队成员"
+          v-model="formData.team_members_ids"
+         >
+         <el-option
+        v-for="item in teamMembersOptions"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      />
+        </el-select>
+        <!-- <el-input
           v-model="formData.team_members_ids"
           placeholder="请输入培训老师团队成员 ID，使用逗号分隔"
-        ></el-input>
+        ></el-input> -->
       </el-form-item>
       <el-form-item prop="cover_img_url" label="封面:">
         <Upload v-model="formData.cover_img_url" />
@@ -120,6 +136,7 @@ import { addCourse } from '@/api/training'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 import MEditor from '@/components/MEditor/index.vue'
+import { getTeamMemberList } from '@/api/about'
 
 const props = defineProps({
   cb: {
@@ -149,11 +166,13 @@ const initFormData = {
   application_process: '',
   duration_num: 4,
   duration_unit: 2,
-  end_time: '2021-09-30 00:00:00',
-  team_members_ids: '1,2,3',
+  end_time: '',
+  team_members_ids: '',
   training_information_type: 1,
   status: 1,
 }
+
+let teamMembersOptions = []
 
 const formData = ref({
   ...initFormData
@@ -188,34 +207,40 @@ const rules = {
   status: [{ required: true, message: '请选择状态', trigger: 'blur' }],
 }
 
-const show = () => {
+const show = async () => {
   visible.value = true
-  formData.value = initFormData
+  // formData.value = initFormData 
+  const { data } = await getTeamMemberList()
+  teamMembersOptions = data?.items.map((item) => ({
+    value: item.id,
+    label: item.nick_name
+  }))
 }
 
 const hide = () => {
   visible.value = false
-  formData.value = {}
+  formData.value = {...initFormData}
 }
 
 const onConfirm = async () => {
   try {
     loading.value = true
-    if(formData.value.is_home_desc) {
+    if(formData.value.is_home_desc === '是') {
       formData.value.is_home = 1
       formData.value.is_home_desc = '是'
     } else {
       formData.value.is_home = 0
       formData.value.is_home_desc = '否'
     }
-    const {code}= await addCourse(formData.value)
+    formData.value.team_members_ids = formData.value.team_members_ids.join(',')
+    const {code, message}= await addCourse(formData.value)
     await props.cb?.()
-    hide()
     if(code === 0) {
       ElMessage.success('添加成功！')
     } else {
-      ElMessage.error('添加失败！')
+      ElMessage.error(`添加失败！${message}`)
     }
+    hide()
   } catch (error) {
     console.log('🚀 ~ file: edit.vue:61 ~ onConfirm ~ error:', error)
   } finally {

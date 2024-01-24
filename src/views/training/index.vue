@@ -43,7 +43,7 @@
         <el-text v-show="row.is_home === 1" v-html="', 排序值：'+row.home_index" />
       </template>
     </el-table-column>
-    <el-table-column prop="home_index" label="首页排序值"></el-table-column>
+    <!-- <el-table-column prop="home_index" label="首页排序值"></el-table-column> -->
     <el-table-column prop="updated_at" label="创建时间"></el-table-column>
     <el-table-column prop="cover_img_url" label="封面图">
       <template #default="{ row }">
@@ -109,8 +109,9 @@ const StatusEnums = {
   2: '无效',
 }
 const IsHomeEnums = {
-  0: '否',
+  [-1]: '全部',
   1: '是',
+  0: '否',
 }
 
 const CategoryOptions = Object.entries(CategoryEnums).map(([value, label]) => ({
@@ -134,8 +135,8 @@ const addRef = ref(null)
 const formData = reactive({
   category: '0',
   title: '',
-  status: '1',
-  is_home: '0',
+  status: '0',
+  is_home: '-1',
 })
 const pagination = reactive({
   page: 1,
