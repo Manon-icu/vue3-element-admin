@@ -19,7 +19,6 @@
         <el-select v-model="formData.category">
           <el-option label="无" :value="0"></el-option>
           <el-option label="新课上线" :value="1"></el-option>
-          <el-option label="正在报名" :value="2"></el-option>
           <el-option label="精选课程" :value="3"></el-option>
         </el-select>
       </el-form-item>
