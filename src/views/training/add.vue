@@ -57,22 +57,10 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="培训老师" prop="team_members_ids">
-        <el-select 
-          multiple
-          placeholder="请选择培训老师团队成员"
-          v-model="formData.team_members_ids"
-         >
-         <el-option
-        v-for="item in teamMembersOptions"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      />
-        </el-select>
-        <!-- <el-input
+        <el-input
           v-model="formData.team_members_ids"
           placeholder="请输入培训老师团队成员 ID，使用逗号分隔"
-        ></el-input> -->
+        ></el-input>
       </el-form-item>
       <el-form-item prop="cover_img_url" label="封面:">
         <Upload v-model="formData.cover_img_url" />
@@ -136,7 +124,6 @@ import { addCourse } from '@/api/training'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 import MEditor from '@/components/MEditor/index.vue'
-import { getTeamMemberList } from '@/api/about'
 
 const props = defineProps({
   cb: {
@@ -210,11 +197,6 @@ const rules = {
 const show = async () => {
   visible.value = true
   // formData.value = initFormData 
-  const { data } = await getTeamMemberList()
-  teamMembersOptions = data?.items.map((item) => ({
-    value: item.id,
-    label: item.nick_name
-  }))
 }
 
 const hide = () => {
@@ -232,7 +214,6 @@ const onConfirm = async () => {
       formData.value.is_home = 0
       formData.value.is_home_desc = '否'
     }
-    formData.value.team_members_ids = formData.value.team_members_ids.join(',')
     const {code, message}= await addCourse(formData.value)
     await props.cb?.()
     if(code === 0) {

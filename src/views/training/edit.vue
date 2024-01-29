@@ -55,18 +55,10 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="培训老师" prop="team_members_ids" >
-        <el-select
-          multiple
-          placeholder="请选择培训老师团队成员"
+        <el-input
           v-model="formData.team_members_ids"
-         >
-            <el-option
-            v-for="item in teamMembersOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
+          placeholder="请输入培训老师团队成员 ID，使用逗号分隔"
+        ></el-input>
       </el-form-item>
       <el-form-item prop="cover_img_url" label="封面:">
         <Upload v-model="formData.cover_img_url" />
@@ -205,8 +197,6 @@ const rules = {
 //   visible.value = true
 // }
 
-let teamMembersOptions = []
-
 const show = async row => {
   console.log(row, 'rowrow')
   const { data } = await getTrainingDetail(row.id)
@@ -214,12 +204,6 @@ const show = async row => {
   Object.keys(formData.value).forEach(key => {
     formData.value[key] = data[key]
   })
-  formData.value['team_members_ids'] = data['team_members_ids'].split(',')
-  const { data:teamMember } = await getTeamMemberList()
-  teamMembersOptions = teamMember?.items.map((item) => ({
-    value: item.id,
-    label: item.nick_name
-  }))
   visible.value = true
 }
 
@@ -238,7 +222,6 @@ const onConfirm = async () => {
       formData.value.is_home = 0
       formData.value.is_home_desc = '否'
     }
-    formData.value.team_members_ids = formData.value.team_members_ids.join(',')
     const {code, message} = await editCourse(formData.value.id, formData.value)
     await props.cb?.()
     hide()
