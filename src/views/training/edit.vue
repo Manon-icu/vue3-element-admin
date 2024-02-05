@@ -223,7 +223,11 @@ const show = async row => {
   }))
   formData.value = { ...data }
   Object.keys(formData.value).forEach(key => {
-    formData.value[key] = data[key]
+    if (key === 'team_members_ids') {
+      formData.value[key] = data[key].split(',')
+    } else {
+      formData.value[key] = data[key]
+    }
   })
   visible.value = true
 }
