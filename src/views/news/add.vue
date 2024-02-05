@@ -35,6 +35,7 @@ import { createNews } from '@/api/news'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 import MEditor from '@/components/MEditor/index.vue'
+import dayjs from 'dayjs'
 
 const props = defineProps({
   cb: {
@@ -77,7 +78,12 @@ const hide = () => {
 const onConfirm = async () => {
   try {
     loading.value = true
-    await createNews(formData.value)
+    await createNews({
+      ...formData.value,
+      occurrence_time: dayjs(formData.value.occurrence_time).format(
+        'YYYY-MM-DD HH:mm:ss'
+      ),
+    })
     await props.cb?.()
     hide()
     ElMessage.success('编辑成功')
