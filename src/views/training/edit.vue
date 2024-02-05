@@ -243,10 +243,10 @@ const onConfirm = async () => {
       formData.value.is_home = 0
       formData.value.is_home_desc = '否'
     }
-    const { code, message } = await editCourse(
-      formData.value.id,
-      formData.value
-    )
+    const { code, message } = await editCourse(formData.value.id, {
+      ...formData.value,
+      team_members_ids: formData.value.team_members_ids.join(','),
+    })
     await props.cb?.()
     hide()
     if (code === 0) {
