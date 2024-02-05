@@ -224,7 +224,9 @@ const show = async row => {
   formData.value = { ...data }
   Object.keys(formData.value).forEach(key => {
     if (key === 'team_members_ids') {
-      formData.value[key] = data[key].split(',')
+      formData.value[key] = data[key].split(',').map(item => {
+        return membersOptions.value.find(el => el.value == item)?.value
+      })
     } else {
       formData.value[key] = data[key]
     }
