@@ -1,6 +1,6 @@
 <template>
   <el-dialog v-model="visible" title="编辑课程" width="85%">
-    <el-form label-width="120" :model="formData" :rules="rules">
+    <el-form label-width="120" :model="formData" destroy-on-close :rules="rules">
       <el-form-item label="课程标题" prop="title">
         <el-input v-model="formData.title" placeholder="请输入标题"></el-input>
       </el-form-item>
