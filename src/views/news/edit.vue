@@ -32,6 +32,7 @@ import { editNews, getNewsDetail } from '@/api/news'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 import MEditor from '@/components/MEditor/index.vue'
+import dayjs from 'dayjs'
 
 const props = defineProps({
   cb: {
@@ -64,7 +65,7 @@ const rules = {
 
 const show = async ({ id }) => {
   const { data } = await getNewsDetail(id)
-  formData.value = {...data}
+  formData.value = { ...data }
   Object.keys(formData.value).forEach(key => {
     formData.value[key] = data[key]
   })
@@ -79,7 +80,12 @@ const hide = () => {
 const onConfirm = async () => {
   try {
     loading.value = true
-    await editNews(formData.value)
+    await editNews({
+      ...formData.value,
+      occurrence_time: dayjs(formData.value.occurrence_time).format(
+        'YYYY-MM-DD HH:mm:ss'
+      ),
+    })
     await props.cb?.()
     hide()
     ElMessage.success('编辑成功')

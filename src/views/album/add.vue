@@ -12,7 +12,7 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="cover_img_url" label="封面:">
-        <Upload v-model="formData.cover_img_url" />
+        <Upload v-model="formData.cover_img_url" :limit="99" />
       </el-form-item>
       <el-form-item prop="abstract" label="摘要:">
         <el-input type="textarea" v-model="formData.abstract"></el-input>

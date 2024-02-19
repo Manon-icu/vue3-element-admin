@@ -6,6 +6,7 @@
     :auto-upload="true"
     :on-success="onSuccess"
     :on-exceed="onExceed"
+    :on-remove="onRemove"
     accept="file/*"
     :limit="limit"
     list-type="picture"
@@ -48,5 +49,8 @@ const onExceed = files => {
   file.uid = genFileId()
   uploadRef.value.handleStart(file)
   uploadRef.value.submit()
+}
+const onRemove = files => {
+  $emit('update:modelValue', '')
 }
 </script>

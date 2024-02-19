@@ -6,7 +6,7 @@ import { useApp } from '@/pinia/modules/app'
 const service = axios.create({
   baseURL: 'http://api.montessori-hz.com/',
   // process.env.NODE_ENV === 'production' ? 'http://api.montessori-hz.com' : '',
-  timeout: 10000,
+  timeout: 30000,
 })
 
 // 拦截请求
