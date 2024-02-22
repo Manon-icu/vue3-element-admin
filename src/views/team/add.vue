@@ -17,6 +17,7 @@
         <el-select v-model="formData.group_type">
           <el-option label="培训师团队" value="1"></el-option>
           <el-option label="培训中心团队" value="2"></el-option>
+          <el-option label="课程培训师" value="3"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item prop="sort_index" label="排序:">

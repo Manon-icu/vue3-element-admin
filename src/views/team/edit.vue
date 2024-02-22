@@ -17,6 +17,7 @@
         <el-select v-model="formData.group_type">
           <el-option label="培训师团队" value="1"></el-option>
           <el-option label="培训中心团队" value="2"></el-option>
+          <el-option label="课程培训师" value="3"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item prop="sort_index" label="排序:">
@@ -34,7 +35,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { editTeamMember,getTeamMember } from '@/api/about'
+import { editTeamMember, getTeamMember } from '@/api/about'
 import { ElMessage } from 'element-plus'
 import Upload from '@/components/Upload/index.vue'
 
@@ -65,11 +66,11 @@ const rules = {
 }
 
 const show = async row => {
-  console.log(row,"rowrow")
+  console.log(row, 'rowrow')
   const { data } = await getTeamMember(row.id)
   data.group_type = data.group_type.toString()
-  formData.value = {...data}
-  console.log(formData.value,"formDataformData")
+  formData.value = { ...data }
+  console.log(formData.value, 'formDataformData')
   Object.keys(formData.value).forEach(key => {
     formData.value[key] = data[key]
   })

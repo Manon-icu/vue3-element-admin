@@ -13,13 +13,14 @@
       <el-select v-model="formData.group_type">
         <el-option label="培训师团队" value="1"></el-option>
         <el-option label="培训中心团队" value="2"></el-option>
+        <el-option label="课程培训师" value="3"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="状态">
       <el-select v-model="formData.status">
         <el-option label="全部" value="-1"></el-option>
         <el-option label="有效" value="1"></el-option>
-                <el-option label="无效" value="2"></el-option>
+        <el-option label="无效" value="2"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item>
@@ -60,11 +61,11 @@
     <el-table-column prop="operation" label="操作">
       <template #default="{ row }">
         <el-switch
-              style="margin-right: 10px"
-              v-model="row.status"
-              :active-value="1"
-              :inactive-value="2"
-              @change="onSwitchStatus(row)"
+          style="margin-right: 10px"
+          v-model="row.status"
+          :active-value="1"
+          :inactive-value="2"
+          @change="onSwitchStatus(row)"
         ></el-switch>
         <el-link type="primary" @click="onEdit(row)">编辑</el-link>
       </template>
