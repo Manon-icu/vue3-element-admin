@@ -238,7 +238,10 @@ const onConfirm = async () => {
       formData.value.is_home = 0
       formData.value.is_home_desc = '否'
     }
-    const { code, message } = await addCourse(formData.value)
+    const { code, message } = await addCourse({
+      ...formData.value,
+      team_members_ids: formData.value.team_members_ids.join(','),
+    })
     await props.cb?.()
     if (code === 0) {
       ElMessage.success('添加成功！')
