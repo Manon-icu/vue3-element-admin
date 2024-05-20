@@ -221,7 +221,7 @@ const rules = {
 
 const show = async row => {
   const { data } = await getTrainingDetail(row.id)
-  const members = await getTeamMemberList()
+  const members = await getTeamMemberList({page_size: 1000})
   membersOptions.value = members.data.items.map(item => ({
     label: item.nick_name,
     value: item.id,

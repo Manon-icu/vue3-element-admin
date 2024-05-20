@@ -214,7 +214,7 @@ const rules = {
 const show = async () => {
   visible.value = true
   // formData.value = initFormData
-  const members = await getTeamMemberList()
+  const members = await getTeamMemberList({page_size: 1000})
   membersOptions.value = members.data.items.map(item => ({
     label: item.nick_name,
     value: item.id,
