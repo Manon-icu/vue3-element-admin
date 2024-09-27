@@ -5,7 +5,7 @@
         <el-upload
           v-model:file-list="fileList"
           ref="uploadRef"
-          action="http://api.montessori-hz.com/admin/common/upload"
+          action="https://api.montessori-hz.com/admin/common/upload"
           accept="file/*"
           list-type="picture"
           :multiple="true"

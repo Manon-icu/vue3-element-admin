@@ -2,7 +2,7 @@
   <el-upload
     :file-list="fileList"
     ref="uploadRef"
-    action="http://api.montessori-hz.com/admin/common/upload"
+    action="https://api.montessori-hz.com/admin/common/upload"
     :auto-upload="true"
     :on-success="onSuccess"
     :on-exceed="onExceed"
