@@ -8,7 +8,7 @@ export const Login = data => {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       "Access-Control-Allow-Origin": "*",
-      'Accept': 'application/json'
+      'Accept': 'application/json; charset=UTF-8',
     },
     data,
   })
