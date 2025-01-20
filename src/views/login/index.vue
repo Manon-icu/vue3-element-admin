@@ -94,27 +94,27 @@ export default defineComponent({
           if (valid) {
             state.loading = true
 
-            //   const targetPath = decodeURIComponent(route.query.redirect)
-            //   console.log(targetPath,"targetPath")
-            //   let data = {
-            //     token: '123456789',
-            //   }
-            //   if (targetPath.startsWith('http')) {
-            //     // 如果是一个url地址
-            //     window.location.href = targetPath
-            //     console.log(targetPath,"1111")
-            //   } else if (targetPath.startsWith('/')) {
-            //     // 如果是内部路由地址
-            //     router.push(targetPath)
-            //     console.log(targetPath,"22222")
-            //   } else {
-            //     router.push('/')
-            //   }
-            //   state.loading = false
-            //   useApp().initToken(data)
+               const targetPath = decodeURIComponent(route.query.redirect)
+               console.log(targetPath,"targetPath")
+               let data = {
+                 token: '123456789',
+               }
+               if (targetPath.startsWith('http')) {
+                 // 如果是一个url地址
+                 window.location.href = targetPath
+                 console.log(targetPath,"1111")
+               } else if (targetPath.startsWith('/')) {
+                 // 如果是内部路由地址
+                 router.push(targetPath)
+                 console.log(targetPath,"22222")
+               } else {
+                 router.push('/')
+               }
+               state.loading = false
+               useApp().initToken(data)
 
-            // return
-            const { code, data, message } = await Login(state.model)
+            return
+            // const { code, data, message } = await Login(state.model)
             if (code === 0) {
               ctx.$message.success({
                 message: 'Success',
