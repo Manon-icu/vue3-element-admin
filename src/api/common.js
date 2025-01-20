@@ -6,7 +6,9 @@ export const Login = data => {
     url: '/admin/admin-user/login',
     method: 'post',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      "Access-Control-Allow-Origin": "*",
+      'Accept': 'application/json'
     },
     data,
   })
