@@ -2,10 +2,12 @@ import request from '@/utils/request'
 
 // 登录接口
 export const Login = data => {
-  request.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
   return request({
     url: '/admin/admin-user/login',
     method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
     data,
   })
 }
