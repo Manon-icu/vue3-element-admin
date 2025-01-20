@@ -14,7 +14,8 @@ service.interceptors.request.use(
   config => {
     const { authorization } = useApp()
     if (authorization) {
-      config.headers['WWW-Authorization'] = `Bearer ${authorization.auth_key}`
+      // config.headers['WWW-Authorization'] = `Bearer ${authorization.auth_key}`
+      config.headers.authorization = 'Bearer ' + authorization
     }
     return config
   },
