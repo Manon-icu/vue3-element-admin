@@ -12,7 +12,8 @@ service.defaults.withCredentials = true
 // 拦截请求
 service.interceptors.request.use(
   config => {
-    const { authorization } = useApp()
+    const authorization = useApp()
+    console.log(authorization)
     if (authorization) {
       config.headers['WWW-Authorization'] = `Bearer ${authorization.auth_key}`
       // config.headers.authorization = 'Bearer ' + authorization
