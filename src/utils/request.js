@@ -8,15 +8,13 @@ const service = axios.create({
   // process.env.NODE_ENV === 'production' ? 'http://api.montessori-hz.com' : '',
   timeout: 30000,
 })
-service.defaults.withCredentials = true
+
 // 拦截请求
 service.interceptors.request.use(
   config => {
     const { authorization } = useApp()
-    console.log(authorization)
     if (authorization) {
       config.headers['WWW-Authorization'] = `Bearer ${authorization.auth_key}`
-      // config.headers.authorization = 'Bearer ' + authorization
     }
     return config
   },
